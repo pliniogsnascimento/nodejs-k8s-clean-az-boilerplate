@@ -3,24 +3,24 @@ const jogoM = require('../models/jogo.model');
 const jogoModel = mongoose.model('jogo');
 
 
-module.exports.buscarJogoDAO = (query,callback) => {
-  jogoModel.find(query, callback);
+module.exports.buscarJogoDAO = (query, cb) => {
+  jogoModel.find(query, cb);
 };
 
-module.exports.buscarJogoPorIdDAO = (id, callback) => {
-  jogoModel.findById(id, callback);
+module.exports.buscarJogoPorIdDAO = (id, cb) => {
+  jogoModel.findById(id, cb);
 };
 
-module.exports.cadastraJogoDAO = (jogo,callback) => {
-  jogo.save(callback);
+module.exports.cadastraJogoDAO = (jogo,cb) => {
+  jogo.save(cb);
 };
 
-module.exports.alteraJogoDAO = (id, jogoAtualizado, callback) => {
-  jogoModel.findOneAndUpdate({ _id: id }, jogoAtualizado, {new: true}, callback);
+module.exports.alteraJogoDAO = (id, jogoAtualizado, cb) => {
+  jogoModel.findOneAndUpdate({ _id: id }, jogoAtualizado, {new: true}, cb);
 };
 
 
-module.exports.removerJogoDAO = (id, callback) => {
+module.exports.removerJogoDAO = (id, cb) => {
   jogoModel.find(id)
-    .remove(callback);
+    .remove(cb);
 };

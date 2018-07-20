@@ -1,3 +1,5 @@
+//#region Imports
+
 const hydraExpress = require('hydra-express');
 const hydra = hydraExpress.getHydra();
 const configJson = require('./config/hydraConfig.json');//verificar rota
@@ -15,7 +17,6 @@ const monitoring = require('./app/utils/monitoring');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 app.use(cors({
     origin: '*',
