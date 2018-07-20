@@ -1,7 +1,7 @@
 const hydraExpress = require('hydra-express');
 const hydra = hydraExpress.getHydra();
 const configJson = require('./config/hydraConfig.json');//verificar rota
-const onRegisterRoutes = require('./app/routes/produtoRoute');
+// const onRegisterRoutes = require('./app/routes/produto.route');
 const express = hydraExpress.getExpress();
 const app = express();
 const consign = require('consign')();
@@ -35,7 +35,7 @@ consign.include('config/dbConnection.js')
 
 hydraExpress.init(configJson, () => {
     hydraExpress.registerRoutes({
-        '/api/v1/': require('./app/routes/produtoRoute')
+        '/api/v1/': require('./app/routes/jogos.route')
     });    
 })
 .then((serviceInfo) => {

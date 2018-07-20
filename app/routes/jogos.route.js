@@ -2,7 +2,7 @@
   const hydraExpress = require('hydra-express');
 
   const upload = require('../utils/multer');
-  const jogoController = require('../controllers/jogoController');
+  const jogoController = require('../controllers/jogo.controller');
   const config = require('../../config/hydraConfig.json');
 
   let express = hydraExpress.getExpress();

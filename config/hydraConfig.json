@@ -2,7 +2,7 @@
     "hydra": {
       "serviceName": "produtos",
       "serviceIP": "",
-      "servicePort": 0,
+      "servicePort": 5000,
       "serviceType": "",
       "serviceDescription": "",
       "redis": {
