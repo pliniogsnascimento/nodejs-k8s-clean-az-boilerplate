@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('../src/routes/produto.route');
-
+const cors = require('cors');
 
 const start = (config) => {
   let app = express();

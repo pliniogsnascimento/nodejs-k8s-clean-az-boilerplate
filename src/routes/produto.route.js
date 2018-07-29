@@ -30,10 +30,11 @@
   router.patch('/jogos/:id/imagens', (req, res, next) => {
     
   });
-
+  
+  /*
   router.patch('/jogos/:id/imagens', upload.single('imagem'), (req, res) => {
     
   });
-
+  */
 }
 
