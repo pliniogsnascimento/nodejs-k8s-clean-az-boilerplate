@@ -1,26 +1,19 @@
 {
-  "name": "produtos",
+  "name": "products",
   "version": "1.0.0",
-  "description": "Microsserviço de produtos",
-  "main": "app.js",
+  "description": "Microserviço de Produtos",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "micro",
-    "produtos"
-  ],
   "author": "Panda",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "consign": "^0.1.6",
-    "cors": "^2.8.4",
-    "fwsp-config": "^1.1.5",
-    "hydra-express": "^1.6.9",
-    "mongoose": "^5.2.3",
-    "multer": "^1.3.1",
-    "nodemon": "^1.18.1"
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "mongoose": "^5.2.5",
+    "morgan": "^1.9.0"
   }
 }

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const produtoModel = require('./produto.model');
+const produtoModel = require('./produtoModel');
  
 let jogoModel = produtoModel.discriminator('jogo', mongoose.Schema({
     desenvolvedora: {
