@@ -2,7 +2,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require('../src/routes/produto.route');
+const routes = require('../src/routes/routes');
 const cors = require('cors');
 
 const start = (config) => {
@@ -29,7 +29,8 @@ const start = (config) => {
     app.use(morgan('dev'))
     app.use(helmet())
     
-    routes(app,config)
+    routes.produto(app,config)
+    routes.health(app,config)
 
     const server = app.listen(config.port, () => resolve(server))
   })
