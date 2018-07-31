@@ -1,4 +1,4 @@
-module.exports = {
-    produto: require('./produto.route'),
-    health: require('./health.route')
+module.exports = (app, config) => {
+    require('./produto.route')(app, config);
+    require('./health.route')(app, config);
 }

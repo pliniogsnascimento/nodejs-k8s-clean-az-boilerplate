@@ -29,8 +29,7 @@ const start = (config) => {
     app.use(morgan('dev'))
     app.use(helmet())
     
-    routes.produto(app,config)
-    routes.health(app,config)
+    routes(app,config)
 
     const server = app.listen(config.port, () => resolve(server))
   })
