@@ -1,13 +1,22 @@
-const repository = (db,collection) => {
+const repository = (db) => {
 
-  const getAllJogos = () => {
+  const getAllValues = (query, cb, schema) => {
+
     return new Promise((resolve, reject) => {
+      
+      schema.find(query,(err, values) => {
+        if(values) {
+          resolve(values);
+        } else {
+          reject(err);
+        }
+      });
     });
   }
 
-  const getJogosById = (id) => {
+  const getValuesByID = (id) => {
     return new Promise((resolve, reject) => {
-     
+
     })
   }
 
@@ -17,8 +26,8 @@ const repository = (db,collection) => {
   }
 
   return Object.create({
-    getAllJogos,
-    getJogosById,
+    getAllValues,
+    getValuesByID,
     disconnect
   })
 }
