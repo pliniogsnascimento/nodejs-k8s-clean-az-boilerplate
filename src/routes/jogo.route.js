@@ -21,12 +21,12 @@ module.exports = (app, repository) => {
 
     //atualiza jogo
     app.patch('/api/v1/jogos/:id', (req, res) => {
-        controller.updateJogo(req, res, repository);
+        controller.updateJogo(req, res);
     });
 
     //remove jogo
     app.delete('/api/v1/jogos/:id', (req, res) => {
-        controller.deleteJogo(req, res, repository);
+        controller.deleteJogo(req, res);
     });
 /*
     //Middleware para checar se arquivo existe

@@ -59,14 +59,6 @@ const repository = (db) => {
       });
     });
   }
-/*
-  const deleteResource = (id, model) => {
-    return new Promise((resolve, reject) => {
-
-    });
-  }
-*/
-
 
   // this will close the database connection
   const disconnect = () => {
