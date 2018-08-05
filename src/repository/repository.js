@@ -1,12 +1,10 @@
 const repository = (db) => {
 
-  const getAllValues = (query, cb, schema) => {
-
+  const getAllResources = (query, model) => {
     return new Promise((resolve, reject) => {
-      
-      schema.find(query,(err, values) => {
-        if(values) {
-          resolve(values);
+      model.find(query, (err, resource) => {
+        if (resource) {
+          resolve(resource);
         } else {
           reject(err);
         }
@@ -14,11 +12,61 @@ const repository = (db) => {
     });
   }
 
-  const getValuesByID = (id) => {
+  const getResourceByID = (id, model) => {
+    return new Promise((resolve, reject) => {
+      model.findById(id, (err, resource) => {
+        if (resource) {
+          resolve(resource);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  const postResource = (resource) => {
+    return new Promise((resolve, reject) => {
+      resource.save((err, resource) => {
+        if (resource) {
+          resolve(resource);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  const updateResource = (id, model, resourceAtualizado) => {
+    return new Promise((resolve, reject) => {
+      model.findOneAndUpdate({ _id: id }, resourceAtualizado, { new: true }, (err, resource) => {
+        if(resource){
+          resolve(resource);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  const deleteResource = (id,model) => {
+    return new Promise((resolve, reject) => {
+      model.find(id).remove((err, resource) => { 
+        if(resource) {
+          resolve(resource);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+/*
+  const deleteResource = (id, model) => {
     return new Promise((resolve, reject) => {
 
-    })
+    });
   }
+*/
+
 
   // this will close the database connection
   const disconnect = () => {
@@ -26,8 +74,11 @@ const repository = (db) => {
   }
 
   return Object.create({
-    getAllValues,
-    getValuesByID,
+    getAllResources,
+    getResourceByID,
+    postResource,
+    updateResource,
+    deleteResource,
     disconnect
   })
 }

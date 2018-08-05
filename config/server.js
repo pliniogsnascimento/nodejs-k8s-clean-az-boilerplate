@@ -31,7 +31,7 @@ const start = (config) => {
     app.use(helmet())
     
     jogoRoutes(app,config.repo)
-    consoleRoutes(app,config.repo)
+    //consoleRoutes(app,config.repo)
 
     const server = app.listen(config.port, () => resolve(server))
   })

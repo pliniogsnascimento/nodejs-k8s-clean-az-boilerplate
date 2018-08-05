@@ -1,3 +1,4 @@
+/*
 const upload = require('../utils/multer');
 const jogoController = require('../controllers/jogo.controller');
 const ConsoleController = require('../controllers/console.controller')
@@ -40,3 +41,4 @@ app.patch('/jogos/:id/imagens', upload.single('imagem'), (req, res) => {
 
 }
 
+*/

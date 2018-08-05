@@ -16,10 +16,6 @@ let produtoSchema = mongoose.Schema({
         type: Number,
         required: [true, 'O campo preco é obrigatório']
     },
-    // desenvolvedora: String,
-    maximo: {
-        type: String
-    },
 
     imagem: {
         type: String

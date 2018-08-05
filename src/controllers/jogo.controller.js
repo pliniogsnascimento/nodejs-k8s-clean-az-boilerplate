@@ -1,63 +1,51 @@
 const mongoose = require('mongoose');
 const jogoSchema = require('../models/jogo.model');
 const jogoModel = mongoose.model('jogo');
+const serverResponse = require('../utils/ServerResponse');
 
-const jogoController = (req, res, rep) => {
-  rep.collection = jogoModel;
-  const getAllJogos = (req, res) => {
-    //genero faixa etaria e valor plataforma
 
+module.exports = function jogoController(rep) {
+
+
+  this.createQueryObject = (queryObject) => {
     let query = {};
 
-    if (req.query.genero) {
-      query.genero = req.query.genero;
-    }
-    //esse ta dando erro
-    if (req.query.classificacaoIndicativa) {
-      query.classificacaoIndicativa = req.query.classificacaoIndicativa;
-    }
-    if (req.query.preco) {
-      query.preco = req.query.preco;
-    }
-    if (req.query.plataforma) {
-      query.plataforma = req.query.plataforma;
-    }
+    for (let key in queryObject)
+      query[key] = queryObject[key];
 
-
-    rep.getAllValues(query, (err, jogos) => {
-      if (err) {
-        res.status(500).json(err);
-      } else {
-        if (jsonValidator.isEmpty(jogos[0])) {
-          res.status(204).send();
-        } else {
-
-          let resp = {
-            data: jogos,
-            links: [
-              {
-                rel: 'self',
-                href: req.path
-              }
-            ]
-          }
-
-          res.status(200).json(resp);
-        }
-      }
-    });
+    return query;
   }
 
-  module.exports.buscarJogoPeloId = (req, res) => {
-    let id = { _id: req.params.id };
-    jogoDAO.buscarJogoPorIdDAO(id, (err, jogos) => {
-      if (err) {
-        res.status(500).json(err)
-      }
-      else if (jogos !== null && jogos !== undefined) {
 
+  this.getAllJogos = (req, res) => {
+
+    const query = this.createQueryObject(req.query);
+
+    rep.getAllResources(query, jogoModel)//(err, jogos) => {
+      .then((jogos) => {
         let resp = {
           data: jogos,
+          links: [{
+            rel: 'self',
+            href: req.path
+          }]
+        }
+        new serverResponse(resp, res).ok();
+      }, (err) => {
+        new serverResponse(err, res).internalError();
+      });
+  }
+
+
+  this.getJogoByID = (req, res) => {
+
+    let id = { _id: req.params.id };
+
+    rep.getResourceByID(id, jogoModel)
+      .then((jogo) => {
+
+        let resp = {
+          data: jogo,
           links: [
             {
               rel: 'self',
@@ -66,19 +54,54 @@ const jogoController = (req, res, rep) => {
           ]
         }
 
-        if (jogos.imagem) {
+        if (jogo.imagem) {
           resp.links.push({
             rel: 'imagem',
-            href: '/static/' + jogos.imagem
+            href: '/static/' + jogo.imagem
           });
         }
+        new serverResponse(jogo, res).ok();
 
-        res.status(200).json(resp);
-      } else {
-        res.status(204).send();
-      }
-    });
+      }, (err) => {
+        new serverResponse(err, res).internalError();
+      });
   }
+
+  this.postJogo = (req, res) => {
+    let jogo = new jogoSchema(req.body);
+    rep.postResource(jogo)
+      .then((jogo) => {
+        new serverResponse(jogo, res).created();
+      }, (err) => {
+        new serverResponse(err, res).internalError();
+      })
+  }
+
+  this.updateJogo = (req, res) => {
+    let jogoAtualizado = req.body;
+    let id = { _id: req.params.id };
+
+    rep.updateResource(id, jogoModel, jogoAtualizado)
+      .then((jogo) => {
+        new serverResponse(jogo, res).ok();
+      }, (err) => {
+        new serverResponse(err, res).internalError();
+      });
+  }
+
+  this.deleteJogo = (req, res) => {
+    let id = { _id: req.params.id };
+
+    rep.deleteResource(id, jogoModel)
+      .then((jogo) => {
+        new serverResponse(jogo, res).ok();
+      }, (err) => {
+        new serverResponse(err, res).internalError();
+      });
+  }
+}
+/*
+  
 
   module.exports.validarJogoExistente = (req, res, next) => {
 
@@ -112,23 +135,7 @@ const jogoController = (req, res, rep) => {
     });
   }
 
-  module.exports.alterarJogo = (req, res) => {
-    let jogosAtualizados = req.body;
-    let id = { _id: req.params.id };
-    jogoDAO.alteraJogoDAO(id, jogosAtualizados, (err, jogos) => {
-      if (err) {
-        console.log('Deu erro');
-        console.log(err);
-        res.status(500).json(err);
-      } else {
-        if (jsonValidator.isEmpty(jogos)) {
-          res.status(204).send();
-        } else {
-          res.status(200).json(jogos);
-        }
-      }
-    });
-  }
+
 
   module.exports.removerJogo = (req, res) => {
     let id = { _id: req.params.id };
@@ -170,5 +177,4 @@ const jogoController = (req, res, rep) => {
       res.status(200).json(resp);
     })
   }
-
-}
+*/
