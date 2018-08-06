@@ -46,7 +46,7 @@ module.exports = function Hateoas(data, res) {
     }
 
     /**
-     * Responde a requisição com o status code 200.
+     * Responde a requisição com o status code 200 (Ok).
      */
     this.ok = () => {
         this.res.status(200).json({
@@ -56,21 +56,28 @@ module.exports = function Hateoas(data, res) {
     }
 
     /**
-     * Responde a requisição com o status code 204.
+     * Responde a requisição com o status code 204 (No Cotent).
      */
     this.noContent = () => {
         this.res.status(204).send();
     }
 
     /**
-     * Responde a requisição com o status code 400.
+     * Responde a requisição com o status code 400 (Bad request).
      */
     this.badRequest = () => {
         this.res.status(400).json({message: 'Bad request'});
     }
 
     /**
-     * Responde a requisição com o status code 201.
+     * Responde a requisição com o status code 304 (Not Modified).
+     */
+    this.notModified = () => {
+        this.res.status(304).json({message: 'Resource not modified'});
+    }
+
+    /**
+     * Responde a requisição com o status code 201 (Created).
      */
     this.created = () => {
         this.res.status(201).json({

@@ -2,8 +2,9 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const express = require('express');
 const bodyParser = require('body-parser');
-const jogoRoutes = require('../src/routes/jogo.route.js');
-const consoleRoutes = require('../src/routes/console.route.js');
+//const jogoRoutes = require('../src/routes/jogo.route.js');
+//const consoleRoutes = require('../src/routes/console.route.js');
+const routes = require('../src/routes/routes');
 const cors = require('cors');
 
 const start = (config) => {
@@ -29,9 +30,10 @@ const start = (config) => {
 
     app.use(morgan('dev'))
     app.use(helmet())
+    app.use('/static', express.static('public'));
     
-    jogoRoutes(app,config.repo)
-    //consoleRoutes(app,config.repo)
+    routes(app,config);
+    //jogoRoutes(app,config.repo)
 
     const server = app.listen(config.port, () => resolve(server))
   })

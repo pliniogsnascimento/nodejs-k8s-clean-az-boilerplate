@@ -23,14 +23,9 @@ module.exports = function jogoController(rep) {
 
     rep.getAllResources(query, jogoModel)//(err, jogos) => {
       .then((jogos) => {
-        let resp = {
-          data: jogos,
-          links: [{
-            rel: 'self',
-            href: req.path
-          }]
-        }
-        new serverResponse(resp, res).ok();
+        new serverResponse(jogos, res)
+          .addLink({rel: 'self',href: req.path})
+          .ok();
       }, (err) => {
         new serverResponse(err, res).internalError();
       });
@@ -39,7 +34,7 @@ module.exports = function jogoController(rep) {
 
   this.getJogoByID = (req, res) => {
 
-    let id = { _id: req.params.id };
+    const id = { _id: req.params.id };
 
     rep.getResourceByID(id, jogoModel)
       .then((jogo) => {
@@ -85,7 +80,7 @@ module.exports = function jogoController(rep) {
       .then((jogo) => {
         new serverResponse(jogo, res).ok();
       }, (err) => {
-        new serverResponse(err, res).internalError();
+        new serverResponse(err, res).notModified();
       });
   }
 
@@ -99,82 +94,49 @@ module.exports = function jogoController(rep) {
         new serverResponse(err, res).internalError();
       });
   }
-}
-/*
-  
 
-  module.exports.validarJogoExistente = (req, res, next) => {
+
+  this.checkExistence = (req, res, next) => {
 
     let id = { _id: req.params.id };
 
-    jogoDAO.buscarJogoPorIdDAO(id, (err, jogos) => {
-      if (err) {
-        res.status(500).json(err);
-      }
-      else if (jogos !== null && jogos !== undefined) {
+    rep.getResourceByID(id, jogoModel)
+      .then((jogos) => {
         next();
-      } else {
-        res.status(400).send();
-      }
-    });
-
+      }, (err) => {
+        new serverResponse(err, res).internalError();
+      });
   }
 
-  module.exports.salvarJogo = (req, res) => {
-    let jogo = new jogoM(req.body);
-    jogoDAO.cadastraJogoDAO(jogo, (err, jogos) => {
-      if (err) {
-        res.status(400).json(err);
-      } else {
-        if (jsonValidator.isEmpty(jogos)) {
-          res.status(204).send();
-        } else {
-          res.status(201).json(jogos);
-        }
-      }
-    });
-  }
-
-
-
-  module.exports.removerJogo = (req, res) => {
+  module.exports.insertImage = (req, res) => {
+    let imagem = req.file;
     let id = { _id: req.params.id };
-    jogoDAO.removerJogoDAO(id, (err, jogos) => {
-      if (err) {
-        res.status(500).json(err);
-      } else {
-        if (jsonValidator.isEmpty(jogos)) {
-          res.status(204).send();
-        } else {
-          res.status(200).json(jogos);
+
+    
+    rep.updateResource(id, jogoModel, { imagem: imagem.filename })
+      .then((jogo) => {
+        
+        let resp = {
+          imagem: imagem,
+          links: [
+            {
+              rel: 'self',
+              href: req.path
+            },
+            {
+              rel: 'imagem',
+              href: '/public/' + imagem.filename
+            },
+            {
+              rel: 'produto',
+              href: '/api/v1/jogos/' + id,
+            }
+          ]
         }
-      }
-    })
+        
+        new serverResponse(resp, res).ok();
+      }, (err) => {
+        new serverResponse(err, res).notModified();
+      });
   }
-
-  module.exports.inserirArquivoImagem = (req, res) => {
-    const imagem = req.file;
-
-    let resp = {
-      imagem: imagem,
-      links: [
-        {
-          rel: 'self',
-          href: req.path
-        },
-        {
-          rel: 'imagem',
-          href: '/static/' + imagem.filename
-        },
-        {
-          rel: 'produto',
-          href: '/api/v1/jogos/' + req.params.id,
-        }
-      ]
-    }
-
-    jogoDAO.alteraJogoDAO(req.params.id, { imagem: imagem.filename }, (jogo) => {
-      res.status(200).json(resp);
-    })
-  }
-*/
+}

@@ -20,14 +20,6 @@ let produtoSchema = mongoose.Schema({
     imagem: {
         type: String
     }
-    // lancamento: Date,
-    // classificacao: String,
-    // genero: String,
-    // Plataformas: [{
-    //     nome: String,
-    //     empresa: String,
-    //     tipo: String
-    // }]
 });
 
 module.exports = mongoose.model('produto', produtoSchema);
