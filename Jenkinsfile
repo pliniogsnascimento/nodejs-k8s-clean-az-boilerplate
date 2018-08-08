@@ -18,8 +18,9 @@ pipeline {
                 //     sleep(3);
                 //     echo "API Publicada com sucesso"
                 // }
+                
                 echo "Build finalizado com sucesso"
-                echo '============ Fim stage Build ============'
+                echo '============ Fim stage Build ============' 
             }
         }
     }
