@@ -108,7 +108,7 @@ module.exports = function jogoController(rep) {
       });
   }
 
-  module.exports.insertImage = (req, res) => {
+  this.insertImage = (req, res) => {
     let imagem = req.file;
     let id = { _id: req.params.id };
 
@@ -134,9 +134,11 @@ module.exports = function jogoController(rep) {
           ]
         }
         
-        new serverResponse(resp, res).ok();
+        new serverResponse({}, res).ok();
       }, (err) => {
         new serverResponse(err, res).notModified();
       });
   }
+
+
 }
