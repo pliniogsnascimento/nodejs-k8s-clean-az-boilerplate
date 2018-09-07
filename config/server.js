@@ -6,17 +6,18 @@ const bodyParser = require('body-parser');
 //const consoleRoutes = require('../src/routes/console.route.js');
 const routes = require('../src/routes/routes');
 const cors = require('cors');
+const etcd = require('./etcd');
 
 const start = (config) => {
   let app = express();
   return new Promise((resolve, reject) => {
-
+   
     if (!config.repo) {
       reject(new Error('O servidor deve ser iniciado com um repositorio'))
     }
 
-    if (!config.port) {
-      reject(new Error('O servidor deve ser iniciado com uma porta valida'))
+    if (!config.configs.port) {
+      reject(new Error('O servidor deve ser iniciado em uma porta valida'))
     }
 
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,11 +32,11 @@ const start = (config) => {
     app.use(morgan('dev'))
     app.use(helmet())
     app.use('/static', express.static('public'));
-    
-    routes(app,config);
-    //jogoRoutes(app,config.repo)
 
-    const server = app.listen(config.port, () => resolve(server))
+    routes(app,config);
+    etcd.registerService(app,config)
+ 
+    const server = app.listen(config.configs.port, () => resolve(server))
   })
 }
 

@@ -23,9 +23,10 @@ mediator.on('db.ready', (db) => {
     .then(repo => {
       console.log('Repository Conectado. Starting Server')
       rep = repo
-      return server.start({port: config.serverSettings.port,repo})
+
+      return server.start({configs: config.serverSettings,repo})
     })
-    .then(dbConnection => { //verificar esse app
+    .then(dbConnection => { 
       console.log(`Server started succesfully, running on port: ${config.serverSettings.port}.`)
       dbConnection.on('close', () => {
         rep.disconnect()
@@ -40,4 +41,6 @@ mediator.on('db.error', (err) => {
 
 config.db.connect(config.dbSettings, mediator)
 
+
 mediator.emit('boot.ready')
+
