@@ -1,6 +1,6 @@
 const Etcd = require('node-etcd');
 
-const etcConfigs = require('./etcdConfig');
+const etcdConfigs = require('./etcdConfig');
 
 const registerService = (app, config) => {
 
