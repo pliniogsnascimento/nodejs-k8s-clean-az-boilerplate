@@ -1,10 +1,12 @@
 const Etcd = require('node-etcd');
 
+const etcConfigs = require('./etcdConfig');
+
 const registerService = (app, config) => {
 
     const routes = app._router.stack
 
-    let etcd = new Etcd("127.0.0.1:2379");
+    let etcd = new Etcd(etcdConfigs.etcdHost + ":" + etcdConfigs.etcdPort);
     let json = { hostname: config.configs.host, port: config.configs.port, GET: [], POST: [], PATCH: [], DELETE: [] }
 
     let previousMethod;
