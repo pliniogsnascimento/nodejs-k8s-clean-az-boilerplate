@@ -1,9 +1,9 @@
 const dbSettings = {
     port: process.env.DB_PORT || '27017',
-    server: process.env.DB_SERVER || 'localhost',
+    server: process.env.DB_SERVER || '192.168.0.3',
     db: process.env.DB || 'products',
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD 
+    user: process.env.DB_USER || '',
+    password: process.env.DB_PASSWORD || '' 
 }
 
 

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const jogoSchema = require('../models/jogo.model');
-const jogoModel = mongoose.model('jogo');
+const consoleSchema = require('../models/console.model');
+const consoleModel = mongoose.model('console');
 const serverResponse = require('../utils/ServerResponse');
 
 
-module.exports = function jogoController(rep) {
+module.exports = function consoleController(rep) {
 
 
   this.createQueryObject = (queryObject) => {
@@ -17,13 +17,13 @@ module.exports = function jogoController(rep) {
   }
 
 
-  this.getAllJogos = (req, res) => {
+  this.getAllConsoles = (req, res) => {
 
     const query = this.createQueryObject(req.query);
 
-    rep.getAllResources(query, jogoModel)//(err, jogos) => {
-      .then((jogos) => {
-        new serverResponse(jogos, res)
+    rep.getAllResources(query, consoleModel)
+      .then((consoles) => {
+        new serverResponse(consoles, res)
           .addLink({rel: 'self',href: req.path})
           .ok();
       }, (err) => {
@@ -32,15 +32,15 @@ module.exports = function jogoController(rep) {
   }
 
 
-  this.getJogoByID = (req, res) => {
+  this.getConsoleByID = (req, res) => {
 
     const id = { _id: req.params.id };
 
-    rep.getResourceByID(id, jogoModel)
-      .then((jogo) => {
+    rep.getResourceByID(id, consoleModel)
+      .then((console) => {
 
         let resp = {
-          data: jogo,
+          data: console,
           links: [
             {
               rel: 'self',
@@ -49,47 +49,47 @@ module.exports = function jogoController(rep) {
           ]
         }
 
-        if (jogo.imagem) {
+        if (console.imagem) {
           resp.links.push({
             rel: 'imagem',
-            href: '/static/' + jogo.imagem
+            href: '/static/' + console.imagem
           });
         }
-        new serverResponse(jogo, res).ok();
+        new serverResponse(console, res).ok();
 
       }, (err) => {
         new serverResponse(err, res).internalError();
       });
   }
 
-  this.postJogo = (req, res) => {
-    let jogo = new jogoSchema(req.body);
-    rep.postResource(jogo)
-      .then((jogo) => {
-        new serverResponse(jogo, res).created();
+  this.postConsole = (req, res) => {
+    let console = new consoleSchema(req.body);
+    rep.postResource(console)
+      .then((console) => {
+        new serverResponse(console, res).created();
       }, (err) => {
         new serverResponse(err, res).internalError();
       })
   }
 
-  this.updateJogo = (req, res) => {
-    let jogoAtualizado = req.body;
+  this.updateConsole = (req, res) => {
+    let consoleAtualizado = req.body;
     let id = { _id: req.params.id };
 
-    rep.updateResource(id, jogoModel, jogoAtualizado)
-      .then((jogo) => {
-        new serverResponse(jogo, res).ok();
+    rep.updateResource(id, consoleModel, consoleAtualizado)
+      .then((console) => {
+        new serverResponse(console, res).ok();
       }, (err) => {
         new serverResponse(err, res).notModified();
       });
   }
 
-  this.deleteJogo = (req, res) => {
+  this.deleteConsole = (req, res) => {
     let id = { _id: req.params.id };
 
-    rep.deleteResource(id, jogoModel)
-      .then((jogo) => {
-        new serverResponse(jogo, res).ok();
+    rep.deleteResource(id, consoleModel)
+      .then((console) => {
+        new serverResponse(console, res).ok();
       }, (err) => {
         new serverResponse(err, res).internalError();
       });
@@ -100,8 +100,8 @@ module.exports = function jogoController(rep) {
 
     let id = { _id: req.params.id };
 
-    rep.getResourceByID(id, jogoModel)
-      .then((jogos) => {
+    rep.getResourceByID(id, consoleModel)
+      .then((consoles) => {
         next();
       }, (err) => {
         new serverResponse(err, res).internalError();
@@ -113,8 +113,8 @@ module.exports = function jogoController(rep) {
     let id = { _id: req.params.id };
 
     
-    rep.updateResource(id, jogoModel, { imagem: imagem.filename })
-      .then((jogo) => {
+    rep.updateResource(id, consoleModel, { imagem: imagem.filename })
+      .then((console) => {
         
         let resp = {
           imagem: imagem,
@@ -129,7 +129,7 @@ module.exports = function jogoController(rep) {
             },
             {
               rel: 'produto',
-              href: '/api/v1/jogos/' + id,
+              href: '/api/v1/console/' + id,
             }
           ]
         }

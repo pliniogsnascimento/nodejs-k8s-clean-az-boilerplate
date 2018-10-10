@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-let produto = require('./produtoModel');
+const produtoModel = require('./produto.model');
 
-let console = produto.discriminator('console', mongoose.Schema({
+let console = produtoModel.discriminator('console', mongoose.Schema({
     fabricante: {
         type: String,
         required: true

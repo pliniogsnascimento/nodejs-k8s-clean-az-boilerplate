@@ -10,12 +10,22 @@
   "author": "Panda",
   "license": "ISC",
   "dependencies": {
+    "amqp": "^0.2.7",
+    "amqplib": "^0.5.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
+    "etcd": "0.0.3",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "mongoose": "^5.2.5",
     "morgan": "^1.9.0",
-    "multer": "^1.3.1"
-  }
+    "multer": "^1.3.1",
+    "node-etcd": "^5.1.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://PandaKnight@bitbucket.org/tccfatec2018/products.git"
+  },
+  "homepage": "https://bitbucket.org/tccfatec2018/products#readme"
 }

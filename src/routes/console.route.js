@@ -1,44 +1,42 @@
-/*
+const consoleController = require('../controllers/console.controller');
 const upload = require('../utils/multer');
-const jogoController = require('../controllers/jogo.controller');
-const ConsoleController = require('../controllers/console.controller')
+module.exports = (app, repository) => {
 
-module.exports = (app,repository) => {
+    const controller = new consoleController(repository)
 
-  app.get('/jogos', (req, res) => {
-  jogoController.getAllGames(req, res, repository);
-});
+    app.get('/api/v1/consoles', (req, res) => {
+        controller.getAllConsoles(req, res);
+    });
 
-//retorna jogo
-app.get('/jogos/:id', (req, res) => {
-  jogoController.getGameByID(req, res, repository);
-});
+    
+    app.get('/api/v1/consoles/:id', (req, res) => {
+        controller.getConsoleByID(req, res);
+    });
 
-//insere jogo
-app.post('/jogos', (req, res) => {
+    //insere console
+    app.post('/api/v1/consoles', (req, res) => {
+        controller.postConsole(req, res);
+    });
 
-});
+    //atualiza console
+    app.patch('/api/v1/consoles/:id', (req, res) => {
+        controller.updateConsole(req, res);
+    });
 
-//atualiza jogo
-app.patch('/jogos/:id', (req, res) => {
- 
-});
+    //remove console
+    app.delete('/api/v1/consoles/:id', (req, res) => {
+        controller.deleteConsole(req, res);
+    });
 
-//remove jogo
-app.delete('/jogos/:id', (req, res) => {
-  
-});
-
-//Middleware para checar se arquivo existe
-app.patch('/jogos/:id/imagens', (req, res, next) => {
-  
-});
+    //Middleware para checar se arquivo existe
+    app.patch('/api/v1/consoles/:id/imagens', (req, res, next) => {
+        controller.checkExistence(req, res, next);
+    });
 
 
-app.patch('/jogos/:id/imagens', upload.single('imagem'), (req, res) => {
-  
-});
+    app.patch('/api/v1/consoles/:id/imagens', upload.single('imagem'), (req, res) => {
+        controller.insertImage(req,res);
+    });
 
 }
 
-*/

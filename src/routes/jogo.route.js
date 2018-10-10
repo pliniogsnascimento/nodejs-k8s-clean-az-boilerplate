@@ -34,7 +34,7 @@ module.exports = (app, repository) => {
     });
 
 
-    app.patch('api/v1/jogos/:id/imagens', upload.single('imagem'), (req, res) => {
+    app.patch('/api/v1/jogos/:id/imagens', upload.single('imagem'), (req, res) => {
         controller.insertImage(req,res);
     });
 
