@@ -29,7 +29,7 @@ const start = (config) => {
       headers: ['Content-Type', 'Authorization', 'token']
     }));
 
-    app.use(routes.health(app, config));
+    routes.health(app, config);
 
     app.use(morgan('dev'));
     app.use(helmet());
