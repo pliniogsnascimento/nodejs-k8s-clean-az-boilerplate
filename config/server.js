@@ -29,8 +29,10 @@ const start = (config) => {
       headers: ['Content-Type', 'Authorization', 'token']
     }));
 
-    app.use(morgan('dev'))
-    app.use(helmet())
+    app.use(routes.health(app, config));
+
+    app.use(morgan('dev'));
+    app.use(helmet());
     app.use('/static', express.static('public'));
 
     routes(app,config);

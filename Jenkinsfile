@@ -8,6 +8,7 @@ pipeline {
         DOCKER_HUB_PASSWORD="TCCFATEC2018"
         KUBERNETES_CONTAINER_NAME="productsmicroservice"
         KUBERNETES_DEPLOYMENT="productsdeployment"
+        KUBERNETES_NAMESPACE="undermarket-services"
     }
 
     stages {
@@ -30,7 +31,7 @@ pipeline {
                         sh "docker-compose down" 
                     }
                     catch(exc) {
-                        echo "Imagem e container ainda não criados"
+                        echo "Imagem e container ainda nï¿½o criados"
                     }
                     def buildCommand = "docker-compose up --build -d"
                     sh "${buildCommand}" 
@@ -47,7 +48,7 @@ pipeline {
             steps {
                 echo '============ Inicio stage de Publish to Kubernetes ============'
                 // sleep(30);
-                sh "kubectl set image deployment/${KUBERNETES_DEPLOYMENT} ${KUBERNETES_CONTAINER_NAME}=${IMAGE_NAME}"
+                sh "kubectl -n ${KUBERNETES_NAMESPACE} set image deployment/${KUBERNETES_DEPLOYMENT} ${KUBERNETES_CONTAINER_NAME}=${IMAGE_NAME}"
 
                 echo '============ Inicio stage de Publish to Kubernetes ============'
             }
