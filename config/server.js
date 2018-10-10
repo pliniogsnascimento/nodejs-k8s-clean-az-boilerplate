@@ -35,8 +35,8 @@ const start = (config) => {
     app.use(helmet());
     app.use('/static', express.static('public'));
 
-    routes(app,config);
-    etcd.registerService(app,config)
+    routes.configure(app,config);
+    etcd.registerService(app,config);
  
     const server = app.listen(config.configs.port, () => resolve(server))
   })
