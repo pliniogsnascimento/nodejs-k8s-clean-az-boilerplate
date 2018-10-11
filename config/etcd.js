@@ -8,7 +8,7 @@ const registerService = (app, config) => {
 
     console.log(etcdConfigs);
 
-    let etcd = new Etcd(etcdConfigs.etcdHost + ":" + etcdConfigs.etcdPort);
+    let etcd = new Etcd(etcdConfigs.etcdSettings.etcdHost + ":" + etcdConfigs.etcdSettings.etcdPort);
     let json = { hostname: config.configs.host, port: config.configs.port, GET: [], POST: [], PATCH: [], DELETE: [] }
 
     let previousMethod;
