@@ -4,7 +4,9 @@ const etcdConfigs = require('./etcdConfig');
 
 const registerService = (app, config) => {
 
-    const routes = app._router.stack
+    const routes = app._router.stack;
+
+    console.log(etcdConfigs);
 
     let etcd = new Etcd(etcdConfigs.etcdHost + ":" + etcdConfigs.etcdPort);
     let json = { hostname: config.configs.host, port: config.configs.port, GET: [], POST: [], PATCH: [], DELETE: [] }
