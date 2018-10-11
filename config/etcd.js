@@ -6,8 +6,6 @@ const registerService = (app, config) => {
 
     const routes = app._router.stack;
 
-    console.log(etcdConfigs);
-
     let etcd = new Etcd(etcdConfigs.etcdSettings.etcdHost + ":" + etcdConfigs.etcdSettings.etcdPort);
     let json = { hostname: config.configs.host, port: config.configs.port, GET: [], POST: [], PATCH: [], DELETE: [] }
 
@@ -40,8 +38,11 @@ const registerService = (app, config) => {
             }
         }
 
-    })
+    });
     console.log('Registered with etcd as /services/products');
+
+    console.log(json);
+
     etcd.set('/services/products',JSON.stringify(json));
 
 };
