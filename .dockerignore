@@ -1,1 +1,6 @@
 node_modules/
+Deployment.yml
+docker-compose.yml
+Jenkinsfile
+.git/
+.gitignore
