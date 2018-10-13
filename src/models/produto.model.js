@@ -7,7 +7,6 @@ let produtoSchema = mongoose.Schema({
     nome: {
         type: String,
         required: [true, 'O campo nome é obrigatório'],
-        //uppercase: true
     },
     descricao: {
         type: String
@@ -19,7 +18,13 @@ let produtoSchema = mongoose.Schema({
 
     imagem: {
         type: String
+    },
+
+    qtdStock: {
+        type: Number,
+        required: [true, 'O campo qtdStock é obrigatorio']
     }
+    
 });
 
 module.exports = mongoose.model('produto', produtoSchema);

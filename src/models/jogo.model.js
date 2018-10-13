@@ -20,7 +20,12 @@ let jogoModel = produtoModel.discriminator('jogo', mongoose.Schema({
 
     plataforma: {
         type: String
+    },
+
+    linkTrailer: {
+        type: String
     }
+
 }));
 
 module.exports = jogoModel;
