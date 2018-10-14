@@ -18,11 +18,6 @@ let produtoSchema = mongoose.Schema({
 
     imagem: {
         type: String
-    },
-
-    qtdStock: {
-        type: Number,
-        required: [true, 'O campo qtdStock é obrigatorio']
     }
     
 });
