@@ -1,10 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent { 
-                node{
-                    label 'linux-agent2e0a10'
-                }
-            }
+    agent any
     
 
     environment {
