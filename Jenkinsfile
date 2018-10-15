@@ -1,6 +1,10 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent { linux }
+    agent { 
+        node{
+            label 'linux'
+        }
+    }
 
     environment {
         IMAGE_NAME="pliniogsnascimento/productsapi:development-0.0.${BUILD_NUMBER}"
