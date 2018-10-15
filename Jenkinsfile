@@ -20,7 +20,7 @@ pipeline {
         stage('Build Docker') {
             
             steps{
-                echo '============ Inicio stage Build Docker ============'
+                echo '============ Inicio stage Build  Docker ============'
 
                 sh "docker build -t ${IMAGE_NAME} ."
                 sh "docker login --username ${DOCKER_HUB_USERNAME} --password ${DOCKER_HUB_PASSWORD}"
