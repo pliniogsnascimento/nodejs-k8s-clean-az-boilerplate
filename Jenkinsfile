@@ -1,6 +1,10 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent none
+    agent { 
+                node{
+                    label 'linux-agent2e0a10'
+                }
+            }
     
 
     environment {
@@ -14,11 +18,7 @@ pipeline {
 
     stages {
         stage('Build Docker') {
-            agent { 
-                node{
-                    label 'linux'
-                }
-            }
+            
             steps{
                 echo '============ Inicio stage Build Docker ============'
 
