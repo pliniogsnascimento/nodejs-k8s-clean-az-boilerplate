@@ -1,10 +1,7 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent { 
-        node{
-            label 'linux'
-        }
-    }
+    agent none
+    
 
     environment {
         IMAGE_NAME="pliniogsnascimento/productsapi:development-0.0.${BUILD_NUMBER}"
@@ -17,6 +14,11 @@ pipeline {
 
     stages {
         stage('Build Docker') {
+            agent { 
+                node{
+                    label 'linux'
+                }
+            }
             steps{
                 echo '============ Inicio stage Build Docker ============'
 
@@ -38,7 +40,7 @@ pipeline {
                         echo "Imagem e container ainda n�o criados"
                     }
                     def buildCommand = "docker-compose up --build -d"
-                    sh "${buildCommand}" 
+                    // sh "${buildCommand}" 
 
                     sleep(3);
                     echo "API Publicada com sucesso"
