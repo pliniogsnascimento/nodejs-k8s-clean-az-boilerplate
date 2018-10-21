@@ -4,7 +4,10 @@ const mediator = new EventEmitter();
 const server = require('./config/server');
 const repository = require('./src/repository/repository');
 const config = require('./config/');
-  
+const amqp = require('amqplib/callback_api');
+const queue = require('./config/queue.manager'); 
+
+
 console.log('--- Product Service ---')
 console.log('Conectando ao Repositorio de Produtos..')
 
@@ -31,6 +34,11 @@ mediator.on('db.ready', (db) => {
       dbConnection.on('close', () => {
         rep.disconnect()
       })
+    })
+    .then(() => {
+      let queueManager = new queue(amqp)
+      console.log('Starting Queue')
+      queueManager.connectQueue();
     })
 })
 
