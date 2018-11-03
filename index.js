@@ -4,8 +4,7 @@ const mediator = new EventEmitter();
 const server = require('./config/server');
 const repository = require('./src/repository/repository');
 const config = require('./config/');
-const amqp = require('amqplib/callback_api');
-const queue = require('./config/queue.manager'); 
+
 
 
 console.log('--- Product Service ---')
