@@ -35,11 +35,6 @@ mediator.on('db.ready', (db) => {
         rep.disconnect()
       })
     })
-    .then(() => {
-      let queueManager = new queue(amqp)
-      console.log('Starting Queue')
-      queueManager.connectQueue();
-    })
 })
 
 mediator.on('db.error', (err) => {

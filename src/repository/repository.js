@@ -12,6 +12,20 @@ const repository = (db) => {
     });
   }
 
+  const getResourceList = (query, limit, model) => {
+    return new Promise((resolve, reject) => {
+      model.find(query)
+        .limit(parseInt(limit))
+        .exec((err, resource) => {
+          if (resource) {
+            resolve(resource);
+          } else {
+            reject(err);
+          }
+        });
+    });
+  }
+
   const getResourceByID = (id, model) => {
     return new Promise((resolve, reject) => {
       model.findById(id, (err, resource) => {
@@ -39,7 +53,7 @@ const repository = (db) => {
   const updateResource = (id, model, resourceAtualizado) => {
     return new Promise((resolve, reject) => {
       model.findOneAndUpdate({ _id: id }, resourceAtualizado, { new: true }, (err, resource) => {
-        if(resource){
+        if (resource) {
           resolve(resource);
         } else {
           reject(err);
@@ -48,10 +62,10 @@ const repository = (db) => {
     });
   }
 
-  const deleteResource = (id,model) => {
+  const deleteResource = (id, model) => {
     return new Promise((resolve, reject) => {
-      model.find(id).remove((err, resource) => { 
-        if(resource) {
+      model.find(id).remove((err, resource) => {
+        if (resource) {
           resolve(resource);
         } else {
           reject(err);
@@ -71,7 +85,9 @@ const repository = (db) => {
     postResource,
     updateResource,
     deleteResource,
+    getResourceList,
     disconnect
+
   })
 }
 

@@ -20,15 +20,28 @@ module.exports = function jogoController(rep) {
   this.getAllJogos = (req, res) => {
 
     const query = this.createQueryObject(req.query);
-
-    rep.getAllResources(query, jogoModel)//(err, jogos) => {
-      .then((jogos) => {
-        new serverResponse(jogos, res)
-          .addLink({rel: 'self',href: req.path})
-          .ok();
-      }, (err) => {
-        new serverResponse(err, res).internalError();
-      });
+    if (query.limit) {
+      let limit = query.limit
+      delete query.limit;
+      console.log(query)
+      rep.getResourceList(query,limit,jogoModel)//(err, jogos) => {
+        .then((jogos) => {
+          new serverResponse(jogos, res)
+            .addLink({ rel: 'self', href: req.path })
+            .ok();
+        }, (err) => {
+          new serverResponse(err, res).internalError();
+        });
+    } else {
+      rep.getAllResources(query, jogoModel)//(err, jogos) => {
+        .then((jogos) => {
+          new serverResponse(jogos, res)
+            .addLink({ rel: 'self', href: req.path })
+            .ok();
+        }, (err) => {
+          new serverResponse(err, res).internalError();
+        });
+    }
   }
 
 
@@ -112,10 +125,10 @@ module.exports = function jogoController(rep) {
     let imagem = req.file;
     let id = { _id: req.params.id };
 
-    
+
     rep.updateResource(id, jogoModel, { imagem: imagem.filename })
       .then((jogo) => {
-        
+
         let resp = {
           imagem: imagem,
           links: [
@@ -133,7 +146,7 @@ module.exports = function jogoController(rep) {
             }
           ]
         }
-        
+
         new serverResponse({}, res).ok();
       }, (err) => {
         new serverResponse(err, res).notModified();
