@@ -53,9 +53,9 @@ module.exports = function jogoController(rep) {
 
   this.getGameByName = (req, res) => {
     const name = req.query.nome;
-    const reg = new RegExp(name.split('').join('(?:\n\s*)?'));
+    const reg = '^' + name + '$';
 
-    rep.getAllResources({ nome: {'$regex': name} }, jogoModel)//(err, jogos) => {
+    rep.getAllResources({ nome: { '$regex': name, $options: 'i' } }, jogoModel)//(err, jogos) => {
         .then((jogos) => {
           new serverResponse(jogos, res)
             .addLink({rel: 'self',href: req.path})
