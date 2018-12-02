@@ -19,16 +19,38 @@ module.exports = function jogoController(rep) {
 
   this.getAllJogos = (req, res) => {
 
-    const query = this.createQueryObject(req.query);
+    console.log(req.query);
 
-    rep.getAllResources(query, jogoModel)//(err, jogos) => {
-      .then((jogos) => {
-        new serverResponse(jogos, res)
-          .addLink({rel: 'self',href: req.path})
-          .ok();
-      }, (err) => {
-        new serverResponse(err, res).internalError();
-      });
+    if(req.query.nome) {
+      this.getGameByName(req, res);
+    }
+    else {
+      const query = this.createQueryObject(req.query);
+
+      rep.getAllResources(query, jogoModel)//(err, jogos) => {
+        .then((jogos) => {
+          new serverResponse(jogos, res)
+            .addLink({rel: 'self',href: req.path})
+            .ok();
+        }, (err) => {
+          new serverResponse(err, res).internalError();
+        });
+    }
+    
+  }
+
+  this.getGameByName = (req, res) => {
+    const name = req.query.nome;
+    const reg = new RegExp(name.split('').join('(?:\n\s*)?'));
+
+    rep.getAllResources({ nome: {'$regex': name} }, jogoModel)//(err, jogos) => {
+        .then((jogos) => {
+          new serverResponse(jogos, res)
+            .addLink({rel: 'self',href: req.path})
+            .ok();
+        }, (err) => {
+          new serverResponse(err, res).internalError();
+        });
   }
 
 
