@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 10000"
   },
   "author": "Panda",
   "license": "ISC",
@@ -13,10 +13,13 @@
     "amqp": "^0.2.7",
     "amqplib": "^0.5.2",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "cors": "^2.8.4",
     "etcd": "0.0.3",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
+    "mocha": "^5.2.0",
     "mongoose": "^5.2.5",
     "morgan": "^1.9.0",
     "multer": "^1.3.1",

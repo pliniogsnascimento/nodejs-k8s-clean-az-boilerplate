@@ -39,9 +39,8 @@ const registerService = (app, config) => {
         }
 
     });
-    console.log('Registered with etcd as /services/products');
+    //console.log('Registered in etcd as /services/products');
 
-    console.log(json);
 
     etcd.set('/services/products',JSON.stringify(json));
 

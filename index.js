@@ -4,7 +4,9 @@ const mediator = new EventEmitter();
 const server = require('./config/server');
 const repository = require('./src/repository/repository');
 const config = require('./config/');
-  
+
+
+
 console.log('--- Product Service ---')
 console.log('Conectando ao Repositorio de Produtos..')
 
