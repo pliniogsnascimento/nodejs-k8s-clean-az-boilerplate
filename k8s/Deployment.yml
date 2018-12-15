@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: productsmicroservice
-          image: pliniogsnascimento/productsapi:development-0.0.17
+          image: pliniogsnascimento/productsapi:development-0.0.19
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -67,6 +67,8 @@ spec:
             items:
             - key: default.json
               path: default.json
+            - key: eureka-client.yml
+              path: eureka-client.yml
 ---
 # ==================== Autoscaling ====================
 apiVersion: autoscaling/v1
