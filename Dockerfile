@@ -5,7 +5,7 @@ RUN npm install --silent
 COPY . /home/app
 
 FROM node:8.11.1-alpine
-ENV NODE_ENV development
+ENV NODE_ENV development 
 COPY --from=builder /home/app /home/app
 WORKDIR /home/app
 ENTRYPOINT [ "npm", "start" ] 
