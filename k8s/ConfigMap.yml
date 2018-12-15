@@ -5,7 +5,7 @@ metadata:
   namespace: ecm
 data:
   default.json: |
-    {"Server": {"host": "localhost", "port": 5000, "enableServiceDiscovery": false},"Database": { "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true","timeout": 20000}}
+    {"Server": {"host": "localhost", "port": 5000, "enableServiceDiscovery": true},"Database": { "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true","timeout": 20000}}
   eureka-client.yml: |
     instance:
       instanceId: 'productservice.ecm:products'
@@ -21,6 +21,6 @@ data:
         '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo'
         name: 'MyOwn'
     eureka: 
-      host: 'localhost'
+      host: 'svcdiscovery'
       port: 8761
       servicePath: '/eureka/apps'
