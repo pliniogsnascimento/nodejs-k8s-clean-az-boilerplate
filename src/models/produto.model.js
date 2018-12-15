@@ -15,11 +15,9 @@ let produtoSchema = mongoose.Schema({
         type: Number,
         required: [true, 'O campo preco é obrigatório']
     },
-
     imagem: {
         type: String
     }
-    
 });
 
 module.exports = mongoose.model('produto', produtoSchema);
