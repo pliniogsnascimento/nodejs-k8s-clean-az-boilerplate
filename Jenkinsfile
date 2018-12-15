@@ -7,7 +7,7 @@ pipeline {
         IMAGE_NAME="pliniogsnascimento/productsapi:development-0.0.${BUILD_NUMBER}"
         KUBERNETES_CONTAINER_NAME="productsmicroservice"
         KUBERNETES_DEPLOYMENT="productsdeployment"
-        KUBERNETES_NAMESPACE="undermarket-services"
+        KUBERNETES_NAMESPACE="ecm"
     }
 
     stages {

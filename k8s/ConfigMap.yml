@@ -4,5 +4,5 @@ metadata:
   name: products-config
   namespace: ecm
 data:
-  development.json: |
+  default.json: |
     {"Server": {"host": "localhost", "port": 5000},"Database": { "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true","timeout": 20000}}

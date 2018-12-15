@@ -4,7 +4,7 @@
     "port": 5000
   },
   "Database": {
-    "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true",
+    "dbConnectionString": "mongodb://localhost:27017/products",
     "timeout": 20000
   }
 }

@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: productsmicroservice
-          image: pliniogsnascimento/productsapi:development-0.0.15
+          image: pliniogsnascimento/productsapi:development-0.0.16
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -65,8 +65,8 @@ spec:
           configMap:
             name: products-config
             items:
-            - key: development.json
-              path: keys
+            - key: default.json
+              path: default.json
 ---
 # ==================== Autoscaling ====================
 # apiVersion: autoscaling/v1
