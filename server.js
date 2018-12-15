@@ -7,6 +7,7 @@ const cors = require('cors');
 const config = require('config');
 
 const start = () => {
+  console.log('--- Product Service ---');
   let app = express();
 
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,5 +31,5 @@ const start = () => {
   });
 }
 
-module.exports = Object.assign({}, { start });
+start();
 
