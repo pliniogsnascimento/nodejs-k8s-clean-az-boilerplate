@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: productsmicroservice
-          image: pliniogsnascimento/productsapi:development-0.0.13
+          image: pliniogsnascimento/productsapi:development-0.0.15
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
