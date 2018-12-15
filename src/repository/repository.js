@@ -1,104 +1,36 @@
-const repository = (db) => {
+const mongo = require('./mongo');
+mongo.connect();
 
-  const getAllResources = (query, model) => {
-    return new Promise((resolve, reject) => {
-      model.find(query, (err, resource) => {
-        if (resource) {
-          resolve(resource);
-        } else {
-          reject(err);
-        }
-      });
-    });
+function Repository() {
+
+  this.getAllResources = async (query, model) => {
+    return await model.find(query);
   }
 
-  const getResourceList = (query, limit, model) => {
-    return new Promise((resolve, reject) => {
-      model.find(query)
-        .limit(parseInt(limit))
-        .exec((err, resource) => {
-          if (resource) {
-            resolve(resource);
-          } else {
-            reject(err);
-          }
-        });
-    });
+  this.getResourceList = async (query, limit, model) => {
+    return await model.find(query)
+      .limit(parseInt(limit))
+      .exec();
   }
 
-  const getResourceByID = (id, model) => {
-    return new Promise((resolve, reject) => {
-      model.findById(id, (err, resource) => {
-        if (resource) {
-          resolve(resource);
-        } else {
-          reject(err);
-        }
-      });
-    });
+  this.getResourceByID = async (id, model) => {
+    return await model.findById(id);
   }
 
-  const postResource = (resource) => {
-    return new Promise((resolve, reject) => {
-      resource.save((err, resource) => {
-        if (resource) {
-          resolve(resource);
-        } else {
-          reject(err);
-        }
-      });
-    });
+  this.postResource = async resource => {
+    return await resource.save();
   }
 
-  const updateResource = (id, model, resourceAtualizado) => {
-    return new Promise((resolve, reject) => {
-      model.findOneAndUpdate({ _id: id }, resourceAtualizado, { new: true }, (err, resource) => {
-        if (resource) {
-          resolve(resource);
-        } else {
-          reject(err);
-        }
-      });
-    });
+  this.updateResource = async (id, model, resourceAtualizado) => {
+    return await model.findOneAndUpdate({ _id: id },
+      resourceAtualizado,
+      { new: true });
   }
 
-  const deleteResource = (id, model) => {
-    return new Promise((resolve, reject) => {
-      model.find(id).remove((err, resource) => {
-        if (resource) {
-          resolve(resource);
-        } else {
-          reject(err);
-        }
-      });
-    });
+  this.deleteResource = async (id, model) => {
+      return await model.find(id)
+        .remove();
   }
-
-  // this will close the database connection
-  const disconnect = () => {
-    db.close()
-  }
-
-  return Object.create({
-    getAllResources,
-    getResourceByID,
-    postResource,
-    updateResource,
-    deleteResource,
-    getResourceList,
-    disconnect
-
-  })
 }
 
-const connect = (connection) => {
-  return new Promise((resolve, reject) => {
-    if (!connection) {
-      reject(new Error('Conexão do banco não fornecida'))
-    }
-    resolve(repository(connection))
-  })
-}
-
-// this only exports a connected repo
-module.exports = Object.assign({}, { connect })
+module.exports = Repository;

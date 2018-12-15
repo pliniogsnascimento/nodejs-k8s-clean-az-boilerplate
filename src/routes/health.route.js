@@ -1,5 +1,5 @@
-module.exports = (router, config) => {
+module.exports = router => {
   router.get('/health', (req, res) => {
-    res.status(200).send('Can u see me? ^ - ^');
+    res.status(200).send('Service is alive!');
   });
 }

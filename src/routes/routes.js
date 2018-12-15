@@ -1,7 +1,7 @@
 
-module.exports.health = (app, config) => require('./health.route')(app, config);
+module.exports.health = (app) => require('./health.route')(app);
 
-module.exports.configure = (app, config) => {
-    require('./jogo.route')(app, config.repo);
-    require('./console.route')(app, config.repo);
+module.exports.configure = (app) => {
+    require('./jogo.route')(app);
+    // require('./console.route')(app);
 }
