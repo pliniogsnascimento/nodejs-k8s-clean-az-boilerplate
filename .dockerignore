@@ -4,3 +4,4 @@ docker-compose.yml
 Jenkinsfile
 .git/
 .gitignore
+k8s/
