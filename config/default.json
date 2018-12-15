@@ -1,7 +1,8 @@
 {
   "Server": {
     "host": "localhost",
-    "port": 5000
+    "port": 5000,
+    "enableServiceDiscovery": true
   },
   "Database": {
     "dbConnectionString": "mongodb://localhost:27017/products",
