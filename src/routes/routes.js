@@ -1,4 +1,3 @@
-
 module.exports.health = (app) => require('./health.route')(app);
 
 module.exports.configure = (app) => {
