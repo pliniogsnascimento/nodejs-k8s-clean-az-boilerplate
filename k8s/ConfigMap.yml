@@ -5,7 +5,7 @@ metadata:
   namespace: ecm
 data:
   default.json: |
-    {"Server": {"host": "localhost", "port": 5000, "enableServiceDiscovery": true},"Database": { "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true","timeout": 20000}}
+    {"Server": {"host": "localhost", "port": 5000, "enableServiceDiscovery": true, "enableAppInsights": true}, "AppInsights": {"instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984"}, "Database": { "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true","timeout": 20000}}
   eureka-client.yml: |
     instance:
       instanceId: 'productservice.ecm:products'

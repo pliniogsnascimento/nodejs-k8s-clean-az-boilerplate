@@ -2,7 +2,11 @@
   "Server": {
     "host": "localhost",
     "port": 5000,
-    "enableServiceDiscovery": true
+    "enableServiceDiscovery": false,
+    "enableAppInsights": false
+  },
+  "AppInsights": {
+    "instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984"
   },
   "Database": {
     "dbConnectionString": "mongodb://localhost:27017/products",

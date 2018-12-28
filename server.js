@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const routes = require('./src/routes/routes');
 const cors = require('cors');
 const config = require('config');
+const appInsights = require('applicationinsights');
 
 const enableServiceDiscovery =  () => {
   const Eureka = require('eureka-js-client').Eureka;
@@ -15,31 +16,23 @@ const enableServiceDiscovery =  () => {
     cwd: `${__dirname}/config`
   });
 
-  // const client = new Eureka({
-  //   instance: {
-  //     instanceId: 'localhost:products',
-  //     app: 'PRODUCTS',
-  //     hostName: 'localhost',
-  //     statusPageUrl: 'http://localhost:5000',
-  //     ipAddr: '127.0.0.1',
-  //     port: {
-  //       '$': 5000,
-  //       '@enabled': true,
-  //     },
-  //     vipAddress: 'products',
-  //     dataCenterInfo: {
-  //       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
-  //       name: 'MyOwn',
-  //     },
-  //   },
-  //   eureka: {
-  //     host: 'localhost',
-  //     port: 8761,
-  //     servicePath: '/eureka/apps'
-  //   },
-  // });
-
   client.start();
+}
+
+const enableAppInsights = () => {
+  console.log('Starting application insights...');
+
+  const key = config.get('AppInsights.instrumentationKey');
+  appInsights.setup(key)
+    .setAutoDependencyCorrelation(true)
+    .setAutoCollectRequests(true)
+    .setAutoCollectPerformance(true)
+    .setAutoCollectExceptions(true)
+    .setAutoCollectDependencies(true)
+    .setAutoCollectConsole(true)
+    .start();
+  
+  console.log('Using application insights');
 }
 
 const start = () => {
@@ -48,6 +41,9 @@ const start = () => {
 
   if(config.get('Server.enableServiceDiscovery'))
     enableServiceDiscovery();
+  
+  if(config.get('Server.enableAppInsights'))
+    enableAppInsights();  
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
@@ -59,6 +55,7 @@ const start = () => {
   }));
 
   routes.health(app);
+
 
   app.use(morgan('dev'));
   app.use(helmet());
