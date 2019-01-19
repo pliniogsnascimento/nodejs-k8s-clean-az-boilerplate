@@ -7,7 +7,7 @@
     "host": "localhost",
     "port": 5000,
     "enableServiceDiscovery": false,
-    "enableAppInsights": false
+    "enableAppInsights": true
   },
   "AppInsights": {
     "instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984"
@@ -15,5 +15,15 @@
   "Database": {
     "dbConnectionString": "mongodb://localhost:27017/products",
     "timeout": 20000
+  },
+  "Logs": {
+    "appenders": {
+      "default": { "type": "console" },
+      "error": { "type": "console" }
+    },
+    "categories": {
+      "default": { "appenders": ["default"], "level": "info" },
+      "error": { "appenders": ["error"], "level": "error" }
+    }
   }
 }
