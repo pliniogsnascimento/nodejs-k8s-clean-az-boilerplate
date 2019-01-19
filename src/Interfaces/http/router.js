@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const ROUTE_PREFIX = '/api/v1';
 
-module.exports = ({config, containerMiddleware, healthMiddleware, controllers}) => {
+module.exports = ({config, containerMiddleware, healthMiddleware, loggingMiddleware, gamesController, logger}) => {
   console.log('--- ' + config.get('App.name') + ' ' + config.get('App.kind') +' ---');
   let app = Router();
 
@@ -20,11 +20,15 @@ module.exports = ({config, containerMiddleware, healthMiddleware, controllers}) 
     }))
     .use(healthMiddleware)
     .use(containerMiddleware)
-    .use(morgan('dev'))
+    .use(loggingMiddleware)
     .use(helmet());
+  
+  logger.debug('Middlewares are set!');
 
   //API ROUTES
-  app.use(`${ROUTE_PREFIX}/games`, controllers.gamesController.router);
+  app.use(`${ROUTE_PREFIX}/games`, gamesController.router);
   
+  logger.debug('Api Routes are set!');
+
   return app;
 }

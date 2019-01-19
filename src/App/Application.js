@@ -1,5 +1,6 @@
 const Eureka = require('eureka-js-client').Eureka;
 const appInsights = require('applicationinsights');
+const path = require('path');
 
 class Application {
   constructor({server, config, logger}) {
@@ -9,34 +10,46 @@ class Application {
   }
 
   async start() {
-    // if(this.database) {
-    //   await this.database.authenticate();
-    // }
+    try {
+      console.time('Service Init');
 
-    if(this.config.get('Server.enableServiceDiscovery'))
-      this.enableServiceDiscovery();
-    
-    if(this.config.get('Server.enableAppInsights'))
-      this.enableAppInsights();
-
-    await this.server.start();
+      if(this.config.get('Server.enableAppInsights'))
+        this.enableAppInsights();
+      else
+        this.logger.warn('Application Insights is disabled');
+  
+      if(this.config.get('Server.enableServiceDiscovery'))
+        this.enableServiceDiscovery();
+        this.logger.warn('Service Discovery is disabled');
+      
+      await this.server.start();
+  
+      console.timeEnd('Service Init');
+    } catch(err) {
+      this.logger.fatal('Error starting the service.', err);
+    }
+   
   }
 
   enableServiceDiscovery() {
     this.logger.info('Configuring service discovery...');
-  
-    // TODO: Resolver esta bagaça
+    const configPath = path.resolve('config/');
+
     const client = new Eureka({
-      cwd: `${__dirname}/config`
+      cwd: configPath
     });
-  
-    client.start();
+    
+    client.start(err => {
+      if(err)
+        this.logger.error('Error trying to connect Eureka Server', err);
+    });
   }
   
   enableAppInsights() {
     this.logger.info('Starting application insights...');
   
     const key = this.config.get('AppInsights.instrumentationKey');
+
     appInsights.setup(key)
       .setAutoDependencyCorrelation(true)
       .setAutoCollectRequests(true)

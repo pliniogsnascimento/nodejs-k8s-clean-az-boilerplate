@@ -9,8 +9,14 @@ const logger = require('./Infra/logging/logger');
 const router = require('./Interfaces/http/router');
 
 const healthMiddleware = require('./Interfaces/http/middlewares/health.route');
+const loggingMiddleware = require('./Interfaces/http/middlewares/logging.middleware');
 
 const controllers = require('./Interfaces/http/controllers/index');
+const gamesController = require('./Interfaces/http/controllers/games.controller');
+
+const gamesApplication = require('./App/Games/games.application');
+
+const gamesService = require('./App/service/game.service');
 
 const container = createContainer();
 
@@ -31,15 +37,32 @@ container
   // Middlewares
 container
   .register({
-    healthMiddleware: asFunction(healthMiddleware).singleton()
+    healthMiddleware: asFunction(healthMiddleware).singleton(),
+    loggingMiddleware: asFunction(loggingMiddleware).singleton()
   })
   .register({
     containerMiddleware: asValue(scopePerRequest(container))
   });
 
+// Controllers
 container
   .register({
     controllers: asFunction(controllers)
+  })
+  .register({
+    gamesController: asClass(gamesController).transient()
+  });
+
+// Application
+container
+  .register({
+    gamesApplication: asClass(gamesApplication).transient()
+  });
+
+// Service
+container
+  .register({
+    gamesService: asClass(gamesService).transient()
   });
 
 module.exports = container;

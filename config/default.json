@@ -7,23 +7,38 @@
     "host": "localhost",
     "port": 5000,
     "enableServiceDiscovery": false,
-    "enableAppInsights": true
+    "enableAppInsights": false
   },
   "AppInsights": {
-    "instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984"
+    "instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984a"
   },
   "Database": {
     "dbConnectionString": "mongodb://localhost:27017/products",
     "timeout": 20000
   },
   "Logs": {
-    "appenders": {
-      "default": { "type": "console" },
-      "error": { "type": "console" }
-    },
-    "categories": {
-      "default": { "appenders": ["default"], "level": "info" },
-      "error": { "appenders": ["error"], "level": "error" }
+    "logLevel": "debug",
+    "log4jsConfig": {
+      "appenders": {
+        "off": { "type": "console" },
+        "mark": { "type": "console" },
+        "error": { "type": "console" },
+        "warn": { "type": "console" },
+        "default": { "type": "console" },
+        "debug": { "type": "console" },
+        "trace": { "type": "console" },
+        "all": { "type": "console" }
+      },
+      "categories": {
+        "off": { "appenders": ["off"], "level": "off" },
+        "mark": { "appenders": ["mark"], "level": "mark" },
+        "error": { "appenders": ["error"], "level": "error" },
+        "warn": { "appenders": ["warn"], "level": "warn" },
+        "default": { "appenders": ["default"], "level": "info" },
+        "debug": { "appenders": ["debug"], "level": "debug" },
+        "trace": { "appenders": ["trace"], "level": "trace" },
+        "all": { "appenders": ["all"], "level": "all" }
+      }
     }
   }
 }

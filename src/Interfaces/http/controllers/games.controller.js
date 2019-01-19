@@ -1,13 +1,17 @@
 const { Router } = require('express');
 
-const GameController = {
+class GameController {
+  constructor({ gamesApplication, logger }) {
+    this.app = gamesApplication;
+    this.logger = logger;
+
+    this.logger.debug('New instance: Gamescontroller');
+  }
+
   get router() {
     const router = Router();
 
-    router.get('/', (req, res) => {
-      // const controller = new jogoController();
-      // controller.getAllJogos(req, res);
-    });  
+    router.get('/', (req, res, next) => this.searchAllGames(req, res, next));  
   
     router.get('/:id', (req, res) => {
       // const controller = new jogoController();
@@ -29,8 +33,10 @@ const GameController = {
       // controller.deleteJogo(req, res);
     });
 
+    this.logger.debug('Game router created');
+
     return router;
-  },
+  }
 
   createQueryObject(queryObject) {
     // let query = {};
@@ -39,10 +45,18 @@ const GameController = {
     //   query[key] = queryObject[key];
 
     // return query;
-  },
+  }
 
   //TODO : Make pagination default
-  searchAllGames(req, res) {
+  searchAllGames(req, res, next) {
+    try {
+      const games = this.app.searchAllGames(req.query);
+
+      res.json(games);
+    } catch(err) {
+      this.logger.error('Error searching all games');
+    }
+    
     // let games;
 
     // if (req.query.nome)
@@ -63,7 +77,7 @@ const GameController = {
       //   .addLink({ rel: 'self', href: req.path })
       //   .ok();
     // }
-  },
+  }
 
   getJogoByID(req, res) {
     // const id = { _id: req.params.id };
@@ -86,13 +100,13 @@ const GameController = {
     //   });
     // }
     // new serverResponse(game, res).ok();
-  },
+  }
 
   postJogo(req, res) {
     // let game = req.body;
     // const savedGame = await this.service.saveGame(game);
     // new serverResponse(savedGame, res).created();
-  },
+  }
 
   updateJogo(req, res) {
     // let game = req.body;
@@ -104,7 +118,7 @@ const GameController = {
     //   new serverResponse(jogo, res).ok();
     // else
     //   new serverResponse(err, res).notModified();
-  },
+  }
 
   deleteJogo(req, res) {
     // let id = { _id: req.params.id };
