@@ -10,7 +10,6 @@ const mediator = new EventEmitter();
 
 chai.use(chaiHttp);
 
-
 //Testa a consulta de todos os jogo
 describe('/GET Todos os jogos', () => {
     it('Deve retornar todos os jogos', (done) => {

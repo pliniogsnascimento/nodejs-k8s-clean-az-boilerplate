@@ -1,4 +1,8 @@
 {
+  "App": {
+    "name": "Products",
+    "kind": "Api"
+  },
   "Server": {
     "host": "localhost",
     "port": 5000,

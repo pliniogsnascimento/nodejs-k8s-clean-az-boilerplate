@@ -36,7 +36,7 @@ const enableAppInsights = () => {
 }
 
 const start = () => {
-  console.log('--- Product Service ---');
+  console.log('--- ' + config.get('App.name') + ' ' + config.get('App.kind') +' ---');
   let app = express();
 
   if(config.get('Server.enableServiceDiscovery'))
@@ -55,7 +55,6 @@ const start = () => {
   }));
 
   routes.health(app);
-
 
   app.use(morgan('dev'));
   app.use(helmet());
