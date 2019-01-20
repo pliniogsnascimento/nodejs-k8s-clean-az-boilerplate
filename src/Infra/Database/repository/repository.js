@@ -1,33 +1,41 @@
-const mongo = require('./mongo');
-mongo.connect();
+class Repository {
+  constructor({ logger, dbConnect }) {
+    this.logger = logger;
 
-function Repository() {
-
-  this.getAllResources = async (query, model) => {
-    return await model.find(query);
+    this.logger.debug('Creating repository');
+    Promise.resolve(dbConnect);
   }
 
-  this.getResourceList = async (query, limit, model) => {
+  async getAllResources(query, model) {
+    this.logger.debug('Getting all resources');
+    const resources = await model.find();
+
+    this.logger.debug('Results', resources);
+
+    return resources;
+  }
+
+  async getResourceList(query, limit, model) {
     return await model.find(query)
       .limit(parseInt(limit))
       .exec();
   }
 
-  this.getResourceByID = async (id, model) => {
+  async getResourceByID(id, model) {
     return await model.findById(id);
   }
 
-  this.postResource = async resource => {
+  async postResource(resource) {
     return await resource.save();
   }
 
-  this.updateResource = async (id, model, resourceAtualizado) => {
+  async updateResource(id, model, updatedResource) {
     return await model.findOneAndUpdate({ _id: id },
-      resourceAtualizado,
+      updatedResource,
       { new: true });
   }
 
-  this.deleteResource = async (id, model) => {
+  async deleteResource(id, model) {
       return await model.find(id)
         .remove();
   }

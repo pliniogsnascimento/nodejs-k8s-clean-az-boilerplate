@@ -1,22 +1,16 @@
 const mongoose = require('mongoose');
-const config = require('config');
 
-const connect = async () => {
+module.exports.connect = async ({ logger, config }) => {
     try {
         const conn = await mongoose.connect(config.get('Database.dbConnectionString'),
         { useNewUrlParser: true });
-        console.log('Connected to mongo database');
+        logger.info('Connected to mongo database');
         return conn;
     }
     catch(err) {
-        console.error('Error connecting with the database');
+        logger.error('Error connecting with the database');
         connect();
     }
 }
 
-const disconnect = async () => mongoose.disconnect();
-
-module.exports = Object.assign({}, { connect, disconnect });
-
-
-
+module.exports.disconnect = async () => mongoose.disconnect();

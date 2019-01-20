@@ -4,9 +4,18 @@ const { Router } = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const errorMiddleware = require('./middlewares/errorHandling.middleware');
+
 const ROUTE_PREFIX = '/api/v1';
 
-module.exports = ({config, containerMiddleware, healthMiddleware, loggingMiddleware, gamesController, logger}) => {
+module.exports = ({
+  config, 
+  containerMiddleware, 
+  healthMiddleware, 
+  loggingMiddleware, 
+  gamesController, 
+  logger
+}) => {
   console.log('--- ' + config.get('App.name') + ' ' + config.get('App.kind') +' ---');
   let app = Router();
 
@@ -25,10 +34,15 @@ module.exports = ({config, containerMiddleware, healthMiddleware, loggingMiddlew
   
   logger.debug('Middlewares are set!');
 
-  //API ROUTES
+  // API ROUTES
   app.use(`${ROUTE_PREFIX}/games`, gamesController.router);
+
   
   logger.debug('Api Routes are set!');
+  
+  // Error Handling
+  app.use(errorMiddleware);
+  logger.debug('Error handling middleware is set!');
 
   return app;
 }
