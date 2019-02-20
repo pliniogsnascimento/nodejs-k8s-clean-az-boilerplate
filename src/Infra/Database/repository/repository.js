@@ -26,7 +26,14 @@ class Repository {
   }
 
   async postResource(resource) {
-    return await resource.save();
+    this.logger.debug('Saving resource to the database');
+
+    const savedResource = await resource.save();
+
+    this.logger.debug('Resource saved');
+    this.logger.debug(savedResource);
+
+    return savedResource;
   }
 
   async updateResource(id, model, updatedResource) {

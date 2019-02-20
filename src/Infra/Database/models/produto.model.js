@@ -4,7 +4,7 @@ let produtoSchema = mongoose.Schema({
     idProduto: {
         type: mongoose.Schema.Types.ObjectId
     },
-    nome: {
+    name: {
         type: String,
         required: [true, 'O campo nome é obrigatório'],
     },

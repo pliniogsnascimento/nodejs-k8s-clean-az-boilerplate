@@ -43,8 +43,8 @@ class GameController {
     res.status(200).json(game);
   }
 
-  saveGame(req, res, next) {
-    const game = this.app.saveGame(req.body);
+  async saveGame(req, res, next) {
+    const game = await this.app.saveGame(req.body);
     res.status(201).json(game);
   }
 

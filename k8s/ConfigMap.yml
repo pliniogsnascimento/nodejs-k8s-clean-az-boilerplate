@@ -4,8 +4,8 @@ metadata:
   name: products-config
   namespace: ecm
 data:
-  default.json: |
-    {"Server": {"host": "localhost", "port": 5000, "enableServiceDiscovery": true, "enableAppInsights": true}, "AppInsights": {"instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984"}, "Database": { "dbConnectionString": "mongodb://ecmicrosvc:dyk3SkZZURUmc5vQqzQReFSqh2juqtW0hhQ0q8vevJui3onZ0OVMUNPqnT6EVSmTj7A2xduvkTugDFCKKjsEZA==@ecmicrosvc.documents.azure.com:10255/products?ssl=true","timeout": 20000}}
+  default.json: | 
+    {"App": {"name": "Products","kind": "Api"},"Server": {"host": "localhost", "port": 5000, "enableServiceDiscovery": true, "enableAppInsights": true}, "AppInsights": {"instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984"}, "Database": { "dbConnectionString": "mongodb://40.121.33.250/products","timeout": 20000} ,"Logs": {"logLevel": "debug","log4jsConfig": {"appenders": {"off": { "type": "console" },"mark": { "type": "console" },"error": { "type": "console" },"warn": { "type": "console" },"default": { "type": "console" },"debug": { "type": "console" },"trace": { "type": "console" },"all": { "type": "console" }},"categories": {"off": { "appenders": ["off"], "level": "off" },"mark": { "appenders": ["mark"], "level": "mark" },"error": { "appenders": ["error"], "level": "error" },"warn": { "appenders": ["warn"], "level": "warn" },"default": { "appenders": ["default"], "level": "info" },"debug": { "appenders": ["debug"], "level": "debug" },"trace": { "appenders": ["trace"], "level": "trace" },"all": { "appenders": ["all"], "level": "all" }}}}}
   eureka-client.yml: |
     instance:
       instanceId: 'productservice.ecm:products'

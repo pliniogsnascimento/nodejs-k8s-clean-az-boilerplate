@@ -43,12 +43,12 @@ class GamesApplication {
     // }
   }
 
-  saveGame(game) {
+  async saveGame(game) {
     this.game.object = game;
 
     this.game.validate();
 
-    return this.game.object;
+    return await this.service.saveGame(this.game.object);
     // let game = req.body;
     // const savedGame = await this.service.saveGame(game);
     // new serverResponse(savedGame, res).created();

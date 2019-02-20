@@ -13,7 +13,7 @@ class JogoService {
 
   // //TODO: Concertar paginação
   // getGamesWithPagination = async (query, limit) => this.rep.getResourceList(query, limit = 25, this.gameModel);
-  // saveGame = async game => this.rep.postResource(new GameSchema(game));
+  async saveGame(game) { return await this.rep.postResource(new GameSchema(game)) }
   // updateGame = async (id, game) => this.rep.updateResource(id, this.gameModel, game);
   // deleteGame = async id => this.rep.deleteResource(id, this.gameModel);
   
