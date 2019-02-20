@@ -16,7 +16,7 @@ module.exports = ({
   gamesController, 
   logger
 }) => {
-  console.log('--- ' + config.get('App.name') + ' ' + config.get('App.kind') +' ---');
+  logger.info('--- ' + config.get('App.name') + ' ' + config.get('App.kind') +' ---');
   let app = Router();
 
   app
@@ -37,7 +37,6 @@ module.exports = ({
   // API ROUTES
   app.use(`${ROUTE_PREFIX}/games`, gamesController.router);
 
-  
   logger.debug('Api Routes are set!');
   
   // Error Handling
