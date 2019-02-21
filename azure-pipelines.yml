@@ -8,10 +8,21 @@ trigger:
 
 pool:
   vmImage: 'Ubuntu-16.04'
+strategy:
+  matrix:
+    node_10_x:
+      node_version: 10.x
 
 variables:
   imageName: 'pliniogsnascimento/productsapi:$(build.buildId)'
 
 steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(node_version)
+
+- script: yarn install
+  displayName: 'yarn build'
+
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
