@@ -1,0 +1,30 @@
+# Docker image
+# Build a Docker image to deploy, run, or push to a container registry.
+# Add steps that use Docker Compose, tag images, push to a registry, run an image, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+strategy:
+  matrix:
+    node_10_x:
+      node_version: 10.x
+
+variables:
+  major-release: 0
+  minor-release: 0
+  imageName: 'pliniogsnascimento/productsapi:$(major-release).$(minor-release).$(build.buildId)'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(node_version)
+
+- script: yarn install
+  displayName: 'yarn build'
+
+- script: docker build -f Dockerfile -t $(imageName) .
+  displayName: 'docker build'
