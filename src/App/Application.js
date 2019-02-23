@@ -3,10 +3,11 @@ const appInsights = require('applicationinsights');
 const path = require('path');
 
 class Application {
-  constructor({server, config, logger}) {
+  constructor({server, config, logger, eventSource}) {
     this.server = server;
-    this.config = config
-    this.logger = logger
+    this.config = config;
+    this.logger = logger;
+    this.eventSource = eventSource;
   }
 
   async start() {
@@ -23,12 +24,12 @@ class Application {
         this.logger.warn('Service Discovery is disabled');
       
       await this.server.start();
-  
+      await this.eventSource.start();
+      
       console.timeEnd('Service Init');
     } catch(err) {
       this.logger.fatal('Error starting the service.', err);
     }
-   
   }
 
   enableServiceDiscovery() {

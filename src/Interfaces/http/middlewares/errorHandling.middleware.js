@@ -1,8 +1,6 @@
 const ModelNotValidException = require('../../../Domain/Exceptions/ModelNotValidException');
 
-
-/* istanbul ignore next */
-module.exports = (err, req, res, next) => { // eslint-disable-line no-unused-vars
+module.exports = (err, req, res, next) => {
   const { logger } = req.container.cradle;
 
   logger.debug('Processing error handler');

@@ -1,7 +1,8 @@
 {
   "App": {
     "name": "Products",
-    "kind": "Api"
+    "kind": "Api",
+    "version": "v1"
   },
   "Server": {
     "host": "localhost",
@@ -13,7 +14,7 @@
     "instrumentationKey": "0aed60da-65d8-4de7-bb2d-9d22aa54f984a"
   },
   "Database": {
-    "dbConnectionString": "mongodb://localhost:27017/products",
+    "dbConnectionString": "mongodb://13.92.179.39/products",
     "timeout": 20000,
     "reconnectTries": 3
   },

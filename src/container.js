@@ -2,6 +2,7 @@ const { createContainer, asClass, asFunction, asValue } = require('awilix');
 const { scopePerRequest } = require('awilix-express');
 
 const Server = require('./Interfaces/http/server');
+const EventSource = require('./Interfaces/messages/EventSource');
 const Application = require('./App/Application');
 
 const config = require('config');
@@ -11,7 +12,6 @@ const router = require('./Interfaces/http/router');
 const healthMiddleware = require('./Interfaces/http/middlewares/health.middleware');
 const loggingMiddleware = require('./Interfaces/http/middlewares/logging.middleware');
 
-const controllers = require('./Interfaces/http/controllers/index');
 const gamesController = require('./Interfaces/http/controllers/games.controller');
 
 const gamesApplication = require('./App/Application/games.application');
@@ -31,7 +31,8 @@ const container = createContainer();
 container
   .register({
     app: asClass(Application).singleton(),
-    server: asClass(Server).singleton()
+    server: asClass(Server).singleton(),
+    eventSource: asClass(EventSource).singleton()
   })
   .register({
     logger: asFunction(logger).singleton(),
@@ -53,9 +54,6 @@ container
 
 // Controllers
 container
-  .register({
-    controllers: asFunction(controllers)
-  })
   .register({
     gamesController: asClass(gamesController).transient()
   });
@@ -87,6 +85,6 @@ container
     repository: asClass(repository).transient(),
     dbConnect: asFunction(mongo.connect).transient(),
     dbDisconnect: asFunction(mongo.disconnect).transient(),
-  })
+  });
 
 module.exports = container;

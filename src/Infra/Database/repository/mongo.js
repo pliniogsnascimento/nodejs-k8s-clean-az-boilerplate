@@ -4,8 +4,7 @@ module.exports.connect = async ({ logger, config }) => {
     try {
         const conn = await mongoose.connect(config.get('Database.dbConnectionString'), { 
                 useNewUrlParser: true, 
-                connectTimeoutMS: config.get('Database.timeout'),
-                wTimeoutMS: config.get('Database.timeout')
+                connectTimeoutMS: config.get('Database.timeout')
             });
 
         logger.info('Connected to mongo database');

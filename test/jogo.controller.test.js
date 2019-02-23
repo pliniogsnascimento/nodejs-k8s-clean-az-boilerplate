@@ -1,5 +1,4 @@
 let mongoose = require("mongoose");
-let jogo = require('../src/models/jogo.model');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = 'http://localhost:5000'

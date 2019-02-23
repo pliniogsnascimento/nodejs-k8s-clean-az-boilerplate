@@ -10,8 +10,6 @@
   "author": "Panda",
   "license": "ISC",
   "dependencies": {
-    "amqp": "^0.2.7",
-    "amqplib": "^0.5.2",
     "applicationinsights": "^1.0.8",
     "awilix": "^4.1.0",
     "awilix-express": "^2.1.0",
@@ -24,6 +22,7 @@
     "eureka-js-client": "^4.4.2",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
+    "kafka-node": "^4.0.2",
     "log4js": "^3.0.6",
     "mocha": "^5.2.0",
     "mongoose": "^5.2.5",
