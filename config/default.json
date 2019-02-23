@@ -14,7 +14,8 @@
   },
   "Database": {
     "dbConnectionString": "mongodb://localhost:27017/products",
-    "timeout": 20000
+    "timeout": 20000,
+    "reconnectTries": 3
   },
   "Logs": {
     "logLevel": "debug",
