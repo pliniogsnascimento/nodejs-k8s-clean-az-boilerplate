@@ -30,4 +30,15 @@ steps:
   displayName: 'Testing'
 
 - script: docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
+  displayName: 'Docker Build'
+
+- task: Docker@1
+  displayName: Container registry login
+  inputs:
+    command: login
+    containerregistrytype: Container Registry
+    dockerRegistryEndpoint: Docker Hub
+
+- script: |
+    docker push $(dockerId)/$(imageName)
+  displayName: 'Publish on Dockerhub'
