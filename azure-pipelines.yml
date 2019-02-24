@@ -40,5 +40,5 @@ steps:
     dockerRegistryEndpoint: Docker Hub
 
 - script: |
-    docker push $(dockerId)/$(imageName)
+    docker push $(imageName)
   displayName: 'Publish on Dockerhub'
