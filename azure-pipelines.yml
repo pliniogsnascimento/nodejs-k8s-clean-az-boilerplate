@@ -17,6 +17,9 @@ variables:
   major-release: 0
   minor-release: 0
   imageName: 'pliniogsnascimento/productsapi:$(major-release).$(minor-release).$(build.buildId)'
+  azureSubscriptionEndpoint: AKS Cluster
+  azureResourceGroup: ecommerce-microservices
+  kubernetesCluster: Ecommerce
 
 steps:
 - task: NodeTool@0
@@ -42,6 +45,17 @@ steps:
 - script: |
     docker push $(imageName)
   displayName: 'Publish on Dockerhub'
+
+- task: HelmDeploy@0
+  displayName: Helm init
+  inputs:
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: init
+    upgradetiller: true
+    waitForExecution: true
+    arguments: --client-only
 
 - task: HelmDeploy@0
   displayName: Helm package
