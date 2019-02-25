@@ -63,11 +63,11 @@ steps:
   inputs:
     command: package
     updatedependency: true
-    chartPath: productsmicroservice
+    chartPath: $(chartName)
     destination: $(Build.ArtifactStagingDirectory)
-    arguments: --version $(chartName)-$(major-release).$(minor-release).$(build.buildId)
+    arguments: --version $(major-release).$(minor-release).$(build.buildId)
 
 - task: PublishPipelineArtifact@0
   inputs:
-    artifactName: $(major-release).$(minor-release).$(build.buildId)
+    artifactName: $(chartName)-$(major-release).$(minor-release).$(build.buildId)
     targetPath: '.'
