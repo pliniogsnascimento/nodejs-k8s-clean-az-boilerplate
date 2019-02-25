@@ -65,8 +65,8 @@ spec:
           configMap:
             name: products-config
             items:
-            - key: default.json
-              path: default.json
+            - key: default.yml
+              path: default.yml
             - key: eureka-client.yml
               path: eureka-client.yml
 ---

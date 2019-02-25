@@ -2,24 +2,25 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: products-config
-  namespace: ecm
+  namespace: {{.Values.namespace}}
 data:
   default.yml: |
     App:
       name: Products
       kind: Api
+      version: {{ .Values.apiVersion }}
     Server:
-      host: localhost
-      port: 5000
+      host: {{.Values.serviceName}}.{{.Values.namespace}}
+      port: {{default 5000 .Values.servicePort}}
       enableServiceDiscovery: true
       enableAppInsights: true
     AppInsights:
-      instrumentationKey: 0aed60da-65d8-4de7-bb2d-9d22aa54f984
+      instrumentationKey: {{.Values.appInsightsInstrumentationKey}}
     Database:
-      dbConnectionString: mongodb://23.96.85.214/products
+      dbConnectionString: mongodb://{{.Values.databaseServiceName}}/products
       timeout: 20000
     Logs:
-      logLevel: debug
+      logLevel: {{.Values.logLevel}}
       log4jsConfig:
         appenders:
           'off':
@@ -73,19 +74,19 @@ data:
             level: all
   eureka-client.yml: |
     instance:
-      instanceId: 'productservice.ecm:products'
+      instanceId: '{{.Values.serviceName}}.{{.Values.namespace}}:products'
       app: 'PRODUCTS'
-      hostName: 'productservice.ecm'
-      statusPageUrl: 'http://productservice.ecm:5000'
+      hostName: '{{.Values.serviceName}}.{{.Values.namespace}}'
+      statusPageUrl: 'http://{{.Values.serviceName}}.{{.Values.namespace}}:{{.Values.servicePort}}'
       ipAddr: '127.0.0.1'
       port:
-        '$': 5000
+        '$': {{.Values.servicePort}}
         '@enabled': true
       vipAddress: 'products'
       dataCenterInfo: 
         '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo'
         name: 'MyOwn'
     eureka: 
-      host: 'svcdiscovery'
-      port: 8761
-      servicePath: '/eureka/apps'
+      host: '{{.Values.host}}'
+      port: {{.Values.port}}
+      servicePath: '{{.Values.servicePath}}'
