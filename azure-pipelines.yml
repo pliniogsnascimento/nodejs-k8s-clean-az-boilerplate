@@ -48,5 +48,5 @@ steps:
   inputs:
     command: package
     updatedependency: true
-    chartPath: Application/charts/sampleapp
+    chartPath: productsmicroservice
     destination: $(Build.ArtifactStagingDirectory)
