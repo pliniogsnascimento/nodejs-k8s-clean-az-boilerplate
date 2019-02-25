@@ -17,7 +17,7 @@ variables:
   major-release: 0
   minor-release: 0
   imageName: 'pliniogsnascimento/productsapi:$(major-release).$(minor-release).$(build.buildId)'
-  azureSubscriptionEndpoint: AKS Cluster
+  azureSubscriptionEndpoint: Resource Manager
   azureResourceGroup: ecommerce-microservices
   kubernetesCluster: Ecommerce
 
