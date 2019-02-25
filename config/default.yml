@@ -10,7 +10,7 @@ Server:
 AppInsights:
   instrumentationKey: 0aed60da-65d8-4de7-bb2d-9d22aa54f984a
 Database:
-  dbConnectionString: mongodb://13.92.179.39/products
+  dbConnectionString: mongodb://localhost/products
   timeout: 20000
   reconnectTries: 3
 Logs:
