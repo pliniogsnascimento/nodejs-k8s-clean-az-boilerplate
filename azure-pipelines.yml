@@ -70,4 +70,4 @@ steps:
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: $(major-release).$(minor-release).$(build.buildId)
-    targetPath: 'src/MyWebApp/bin/Release/netcoreapp2.0/linux-x64/publish'
+    targetPath: '.'
