@@ -63,7 +63,7 @@ steps:
   inputs:
     command: package
     updatedependency: true
-    chartPath: $(chartName)
+    chartPath: productsmicroservice
     destination: $(Build.ArtifactStagingDirectory)
     arguments: --version $(chartName)-$(major-release).$(minor-release).$(build.buildId)
 
