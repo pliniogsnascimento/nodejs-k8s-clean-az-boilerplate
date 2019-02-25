@@ -42,3 +42,11 @@ steps:
 - script: |
     docker push $(imageName)
   displayName: 'Publish on Dockerhub'
+
+  - task: HelmDeploy@0
+  displayName: Helm package
+  inputs:
+    command: package
+    updatedependency: true
+    chartPath: Application/charts/sampleapp
+    destination: $(Build.ArtifactStagingDirectory)
