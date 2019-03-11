@@ -70,4 +70,4 @@ steps:
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: $(chartName)-$(major-release).$(minor-release).$(build.buildId)
-    targetPath: '.'
+    targetPath: '$(chartName)-$(major-release).$(minor-release).$(build.buildId).tgz'
