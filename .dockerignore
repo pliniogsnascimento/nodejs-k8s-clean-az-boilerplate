@@ -5,3 +5,5 @@ Jenkinsfile
 .git/
 .gitignore
 k8s/
+azure-pipelines.yml
+test/
