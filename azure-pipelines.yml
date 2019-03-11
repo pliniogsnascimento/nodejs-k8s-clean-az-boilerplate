@@ -70,8 +70,6 @@ steps:
     docker push $(imageName):$(imageVersion)
   displayName: 'Publish Latest Image on Repository'
 
-
-
 # - script: |
 #     az acr helm repo add -n $(azureContainerRepo)
 #   displayName: 'Connect helm to repo'
@@ -106,7 +104,7 @@ steps:
 #     updatedependency: true
 #     chartPath: $(chartName)
 #     destination: $(Build.ArtifactStagingDirectory)
-#     arguments: --version $(major-release).$(minor-release).$(build.buildId)    
+#     arguments: --version $(major-release).$(minor-release).$(build.buildId)  
 
 - task: HelmDeploy@0
   displayName: Helm update
@@ -114,7 +112,8 @@ steps:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureResourceGroup: $(azureResourceGroup)
     kubernetesCluster: $(kubernetesCluster)
-    command: repo update
+    command: repo
+    arguments: update
 
 - task: HelmDeploy@0
   displayName: Helm upgrade
