@@ -24,7 +24,7 @@ variables:
   azureResourceGroup: ecommerce-microservices
   kubernetesCluster: Ecommerce
   chartName: productsmicroservice
-  
+  releaseName: products
 
 steps:
 - task: NodeTool@0
@@ -107,15 +107,6 @@ steps:
 #     arguments: --version $(major-release).$(minor-release).$(build.buildId)  
 
 - task: HelmDeploy@0
-  displayName: Helm Repo List
-  inputs:
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureResourceGroup: $(azureResourceGroup)
-    kubernetesCluster: $(kubernetesCluster)
-    command: repo
-    arguments: list
-
-- task: HelmDeploy@0
   displayName: Helm update
   inputs:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
@@ -125,15 +116,6 @@ steps:
     arguments: update
 
 - task: HelmDeploy@0
-  displayName: Helm Repo List
-  inputs:
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureResourceGroup: $(azureResourceGroup)
-    kubernetesCluster: $(kubernetesCluster)
-    command: repo
-    arguments: list
-
-- task: HelmDeploy@0
   displayName: Helm upgrade
   inputs:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
@@ -141,8 +123,8 @@ steps:
     kubernetesCluster: $(kubernetesCluster)
     command: upgrade
     chartType: Name
-    chartName: $(chartName)
+    chartName: $(azureContainerRepo)/$(chartName)
     # chartPath: $(Build.ArtifactStagingDirectory)/$(chartName)-$(major-release).$(minor-release).$(build.buildId).tgz
-    releaseName: productsapi
+    releaseName: $(releaseName)
     install: true
     waitForExecution: false
