@@ -107,6 +107,15 @@ steps:
 #     arguments: --version $(major-release).$(minor-release).$(build.buildId)  
 
 - task: HelmDeploy@0
+  displayName: Helm Repo List
+  inputs:
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: repo
+    arguments: list
+
+- task: HelmDeploy@0
   displayName: Helm update
   inputs:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
@@ -114,6 +123,15 @@ steps:
     kubernetesCluster: $(kubernetesCluster)
     command: repo
     arguments: update
+
+- task: HelmDeploy@0
+  displayName: Helm Repo List
+  inputs:
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: repo
+    arguments: list
 
 - task: HelmDeploy@0
   displayName: Helm upgrade
