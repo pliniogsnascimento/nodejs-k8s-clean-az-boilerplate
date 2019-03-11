@@ -1,10 +1,5 @@
-# Docker image
-# Build a Docker image to deploy, run, or push to a container registry.
-# Add steps that use Docker Compose, tag images, push to a registry, run an image, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
-- master
+- development
 
 pool:
   vmImage: 'Ubuntu-16.04'
@@ -34,20 +29,11 @@ steps:
 - script: yarn install
   displayName: 'Build'
 
-#- script: yarn test
-#  displayName: 'Testing'
+- script: yarn test
+ displayName: 'Testing'
 
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'Docker Build'
-
-# - task: Docker@1
-#   displayName: Build image
-#   inputs:
-#     command: build
-#     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-#     azureContainerRegistry: $(azureContainerRegistry)
-#     dockerFile: Dockerfile
-#     imageName: $(Build.Repository.Name)
 
 - task: Docker@1
   displayName: Tag image
@@ -70,10 +56,6 @@ steps:
     docker push $(imageName):$(imageVersion)
   displayName: 'Publish Latest Image on Repository'
 
-# - script: |
-#     az acr helm repo add -n $(azureContainerRepo)
-#   displayName: 'Connect helm to repo'
-
 - task: HelmDeploy@0
   displayName: Helm init
   inputs:
@@ -90,22 +72,7 @@ steps:
   inputs:
     azureSubscription: $(azureSubscriptionEndpoint)
     scriptLocation: inlineScript
-    #scriptPath: # Required when scriptLocation == ScriptPath
     inlineScript: az acr helm repo add -n $(azureContainerRepo)
-    # arguments: 
-    #addSpnToEnvironment: false # Optional
-    #useGlobalConfig: false # Optional
-    #workingDirectory: # Optional
-    #failOnStandardError: false # Optional
-
-# - task: HelmDeploy@0
-#   displayName: Helm package
-#   inputs:
-#     command: package
-#     updatedependency: true
-#     chartPath: $(chartName)
-#     destination: $(Build.ArtifactStagingDirectory)
-#     arguments: --version $(major-release).$(minor-release).$(build.buildId)  
 
 - task: HelmDeploy@0
   displayName: Helm update
@@ -125,7 +92,6 @@ steps:
     command: upgrade
     chartType: Name
     chartName: $(azureContainerRepo)/$(chartName)
-    # chartPath: $(Build.ArtifactStagingDirectory)/$(chartName)-$(major-release).$(minor-release).$(build.buildId).tgz
     releaseName: $(releaseName)
     install: true
     waitForExecution: false
