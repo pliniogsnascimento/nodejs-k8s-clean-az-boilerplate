@@ -35,7 +35,7 @@ steps:
   displayName: 'Build'
 
 - script: yarn test
- displayName: 'Testing'
+  displayName: 'Testing'
 
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'Docker Build'
