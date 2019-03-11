@@ -55,8 +55,8 @@ steps:
     command: tag
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureContainerRegistry: $(azureContainerRegistry)
-    imageName: $(azureContainerRegistry)/$(imageName):latest
-    arguments: $(azureContainerRegistry)/$(imageName):$(imageVersion)
+    imageName: $(imageName):latest
+    arguments: $(imageName):$(imageVersion)
 
 - task: Docker@1
   displayName: Container registry login
