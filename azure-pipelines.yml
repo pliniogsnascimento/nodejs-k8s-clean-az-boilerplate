@@ -16,11 +16,15 @@ strategy:
 variables:
   major-release: 0
   minor-release: 0
-  imageName: 'pliniogsnascimento/productsapi:$(major-release).$(minor-release).$(build.buildId)'
+  azureContainerRepo: ecommerceRegistry
+  azureContainerRegistry: ecommerceregistry.azurecr.io
+  imageName: '$(azureContainerRegistry)/productsapi:$(major-release).$(minor-release).$(build.buildId)'
+  imageVersion: $(major-release).$(minor-release).$(build.buildId)
   azureSubscriptionEndpoint: Resource Manager
   azureResourceGroup: ecommerce-microservices
   kubernetesCluster: Ecommerce
   chartName: productsmicroservice
+  
 
 steps:
 - task: NodeTool@0
@@ -40,12 +44,12 @@ steps:
   displayName: Container registry login
   inputs:
     command: login
-    containerregistrytype: Container Registry
-    dockerRegistryEndpoint: Docker Hub
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
 
 - script: |
     docker push $(imageName)
-  displayName: 'Publish on Dockerhub'
+  displayName: 'Publish Image on Repository'
 
 - task: HelmDeploy@0
   displayName: Helm init
@@ -58,6 +62,10 @@ steps:
     waitForExecution: true
     arguments: --client-only
 
+- script: |
+    az acr helm repo add -n $(azureContainerRepo)
+  displayName: 'Connect helm to repo'
+
 - task: HelmDeploy@0
   displayName: Helm package
   inputs:
@@ -65,9 +73,17 @@ steps:
     updatedependency: true
     chartPath: $(chartName)
     destination: $(Build.ArtifactStagingDirectory)
-    arguments: --version $(major-release).$(minor-release).$(build.buildId)
+    arguments: --version $(major-release).$(minor-release).$(build.buildId)    
 
-- task: PublishPipelineArtifact@0
+- task: HelmDeploy@0
+  displayName: Helm upgrade
   inputs:
-    artifactName: $(chartName)-$(major-release).$(minor-release).$(build.buildId)
-    targetPath: '$(chartName)-$(major-release).$(minor-release).$(build.buildId).tgz'
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: upgrade
+    chartType: filepath
+    chartPath: $(Build.ArtifactStagingDirectory)/$(chartName)-$(major-release).$(minor-release).$(build.buildId).tgz
+    releaseName: productsapi
+    install: true
+    waitForExecution: false
