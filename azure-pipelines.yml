@@ -70,17 +70,7 @@ steps:
     docker push $(imageName):$(imageVersion)
   displayName: 'Publish Latest Image on Repository'
 
-- task: AzureCLI@1
-  inputs:
-    azureSubscription: $(azureSubscriptionEndpoint)
-    scriptLocation: inlineScript
-    #scriptPath: # Required when scriptLocation == ScriptPath
-    inlineScript: az acr helm repo add -n $(azureContainerRepo)
-    # arguments: 
-    #addSpnToEnvironment: false # Optional
-    #useGlobalConfig: false # Optional
-    #workingDirectory: # Optional
-    #failOnStandardError: false # Optional
+
 
 # - script: |
 #     az acr helm repo add -n $(azureContainerRepo)
@@ -97,6 +87,18 @@ steps:
     waitForExecution: true
     arguments: --client-only
 
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: $(azureSubscriptionEndpoint)
+    scriptLocation: inlineScript
+    #scriptPath: # Required when scriptLocation == ScriptPath
+    inlineScript: az acr helm repo add -n $(azureContainerRepo)
+    # arguments: 
+    #addSpnToEnvironment: false # Optional
+    #useGlobalConfig: false # Optional
+    #workingDirectory: # Optional
+    #failOnStandardError: false # Optional
+
 # - task: HelmDeploy@0
 #   displayName: Helm package
 #   inputs:
@@ -105,6 +107,14 @@ steps:
 #     chartPath: $(chartName)
 #     destination: $(Build.ArtifactStagingDirectory)
 #     arguments: --version $(major-release).$(minor-release).$(build.buildId)    
+
+- task: HelmDeploy@0
+  displayName: Helm update
+  inputs:
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: repo update
 
 - task: HelmDeploy@0
   displayName: Helm upgrade
