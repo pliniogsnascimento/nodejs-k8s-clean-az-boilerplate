@@ -67,7 +67,8 @@ steps:
 
 - script: |
     docker push $(imageName)
-  displayName: 'Publish Image on Repository'
+    docker push $(imageName):$(imageVersion)
+  displayName: 'Publish Latest Image on Repository'
 
 - task: AzureCLI@1
   inputs:
