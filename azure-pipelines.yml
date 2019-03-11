@@ -62,9 +62,21 @@ steps:
     waitForExecution: true
     arguments: --client-only
 
-- script: |
-    az acr helm repo add -n $(azureContainerRepo)
-  displayName: 'Connect helm to repo'
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: $(azureSubscriptionEndpoint)
+    scriptLocation: inlineScript
+    #scriptPath: # Required when scriptLocation == ScriptPath
+    inlineScript: az acr helm repo add
+    arguments: -n $(azureContainerRepo)
+    #addSpnToEnvironment: false # Optional
+    #useGlobalConfig: false # Optional
+    #workingDirectory: # Optional
+    #failOnStandardError: false # Optional
+
+# - script: |
+#     az acr helm repo add -n $(azureContainerRepo)
+#   displayName: 'Connect helm to repo'
 
 - task: HelmDeploy@0
   displayName: Helm package
